@@ -1,0 +1,13 @@
+.ant-modal .ant-modal-content,
+.ant-modal-header .ant-modal-title {
+  background-color: var(--dk-dark-bg);
+}
+
+.ant-modal-header .ant-modal-title {
+  color: var(--logo-yellow-color);
+  font-size: larger;
+}
+
+.ant-modal-close-x {
+  color: var(--dk-gray-400);
+}

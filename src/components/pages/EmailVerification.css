@@ -1,0 +1,41 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid var(--dk-gray-100); /* Light grey */
+  border-top: 10px solid var(--dk-darker-bg); /* Blue */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: auto;
+  margin-top: 10%;
+}
+
+.tip-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: auto;
+}
+.tip {
+  font-weight: bolder;
+  font-size: x-large;
+  color: var(--navbar-bg-color);
+  margin-top: 1rem;
+}
+
+.success-icon {
+  padding: 5px;
+}

@@ -1,0 +1,5 @@
+.ant-layout-footer {
+  padding-left: 0 !important;
+  color: var(--dk-gray-300) !important;
+  background-color: var(--sidebar-bg-color) !important;
+}

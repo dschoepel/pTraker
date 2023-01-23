@@ -1,0 +1,75 @@
+.profile-layout {
+  background-color: var(--dk-darker-bg);
+  /* flex-wrap: wrap; */
+}
+
+.profile-divider-horizontal {
+  background-color: var(--dk-gray-300);
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+.profile-divider-vertical {
+  background-color: var(--dk-gray-300);
+  height: 100%;
+  width: 1px;
+}
+.profile-sider .ant-layout-sider-children {
+  background-color: var(--dk-darker-bg);
+}
+.profile-sider {
+  width: 150px !important;
+  background-color: var(--dk-darker-bg);
+}
+
+.profile-menu-title {
+  margin: 1rem 0 0 1rem;
+  color: var(--dk-gray-100) !important;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.ant-layout .settings-menu {
+  background-color: var(--dk-darker-bg);
+  flex-wrap: wrap;
+  /* width: 20em; */
+}
+
+.settings-row {
+  color: var(--dk-gray-100);
+  flex-wrap: wrap;
+}
+
+.ant-form-item .ant-form-item-label > label,
+.ant-form-item .ant-form-item-label > label .ant-form-item-tooltip {
+  color: var(--dk-gray-100);
+  text-transform: uppercase;
+}
+
+.settings-row h4 {
+  font-size: large;
+  margin: 2rem 0 1rem 1rem;
+}
+
+.settings-row p {
+  font-size: small;
+  color: var(--dk-gray-300);
+  margin-left: 1rem;
+}
+
+.test-box {
+  max-width: 450px;
+  height: 250px;
+  background-color: var(--dk-gray-400);
+  margin: 1rem;
+}
+
+.profile-card-style {
+  background-color: var(--dk-dark-bg);
+  margin-top: 2.25rem;
+  margin-left: 1rem;
+}
+
+.profile-col1 {
+  max-width: 15em;
+}

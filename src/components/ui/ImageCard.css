@@ -1,0 +1,121 @@
+/* Used */
+.card-grid {
+  /* background: var(--dk-gray-100); */
+  background: var(--dk-dark-bg);
+
+  margin: 2rem;
+  max-width: 90%;
+  /* width: min-content; */
+  /* height: min-content; */
+  border-radius: 0.6em;
+
+  overflow: hidden;
+  /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+  cursor: pointer;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25),
+    0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 200ms;
+}
+
+.card-grid .antform-item-lable {
+  color: var(--dk-gray-100);
+}
+
+/* Not Used */
+.image-flex {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Used */
+.g-image {
+  /* display: block; */
+  min-width: 50px;
+  max-width: 125px;
+  width: 100%;
+  border-radius: 10px;
+  /* padding: 8 8; */
+  margin: 1rem 0rem 1rem 0rem;
+  /* align-self: center; */
+  /* object-fit: scale-down; */
+  /* color: #008000; */
+  /* border-radius: 50%; */
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+}
+
+/* Used */
+.progress-bar {
+  min-width: 100px;
+  max-width: 12vw;
+  margin-left: 1rem;
+  align-self: center;
+  flex-direction: row;
+}
+
+/* Used */
+.image-instructions {
+  text-align: left;
+}
+
+.image-instructions-title {
+  color: var(--dk-gray-100);
+  /* font-size: 2vw;
+  font-weight: bold;
+  word-break: break-word;
+  margin: 1rem 1rem 1rem 1rem; */
+}
+
+/* Used */
+.image-instructions p {
+  color: var(--dk-gray-400);
+  text-align: left;
+  line-height: normal;
+  font-size: 1.25vw;
+  margin-left: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Used */
+.image-instructions h2 {
+  color: var(--dk-gray-900);
+  margin-top: 0.2em;
+  margin-left: 0.5rem;
+  line-height: 1.2;
+  font-size: 1.5vw;
+  font-weight: 600;
+  /* font-family: "Montserrat", sans-serif; */
+  transition: all ease-in 100ms;
+}
+
+/* Used */
+.image-instructions h5 {
+  color: var(--dk-gray-400);
+  font-weight: 700;
+  font-size: 1.25vw;
+  letter-spacing: 0.04em;
+  margin: 1rem 1rem;
+  text-transform: uppercase;
+}
+
+/* Not Used */
+.image-instructions .ant-btns {
+  margin: 1rem;
+  /* margin-left: 1rem; */
+  /* margin-bottom: 1rem; */
+  /* font-size: normal; */
+}
+
+.card-grid:hover {
+  transform: scale(1.03);
+  box-shadow: 0 13px 40px -5px hsla(240, 30.1%, 28%, 0.12),
+    0 8px 32px -8px hsla(0, 0%, 0%, 0.14),
+    0 -6px 32px -6px hsla(0, 0%, 0%, 0.02);
+}
+
+.img-btn {
+  width: 10vw;
+  height: 1vw;
+}

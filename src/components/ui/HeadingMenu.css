@@ -1,0 +1,21 @@
+.pt-heading-menu {
+  float: right;
+  flex: auto;
+  justify-content: flex-end;
+  /* height: 6.1rem; */
+  min-width: 0;
+  /* padding-top: 1em; */
+  font-size: large;
+  /* font-weight: bold; */
+  background-color: var(--navbar-bg-color);
+}
+
+.ant-menu-item-divider {
+  background-color: var(--dk-gray-200);
+  width: 95%;
+  margin: 0 5px;
+}
+
+.ant-menu-item {
+  font-size: large;
+}

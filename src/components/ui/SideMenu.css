@@ -1,0 +1,5 @@
+.side-menu {
+  background-color: var(--sidebar-bg-color);
+  /* background-color: var(--sidebar-bg-color); */
+  color: var(--dk-gray-100);
+}
