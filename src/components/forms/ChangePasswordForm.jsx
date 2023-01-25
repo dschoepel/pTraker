@@ -81,6 +81,7 @@ function ChangePasswordForm(props) {
           hasFeedback
         >
           <PasswordInput
+            className="password-addon-icon"
             addonBefore={<LockOutlined />}
             allowClear
             placeholder="Current Password"
@@ -112,6 +113,7 @@ function ChangePasswordForm(props) {
           hasFeedback
         >
           <PasswordInput
+            className="password-addon-icon"
             addonBefore={<LockOutlined />}
             allowClear
             placeholder="New Password"
@@ -146,6 +148,7 @@ function ChangePasswordForm(props) {
           hasFeedback
         >
           <PasswordInput
+            className="password-addon-icon"
             addonBefore={<SafetyOutlined />}
             allowClear
             placeholder="Confirm New Password"

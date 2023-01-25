@@ -1,12 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Menu } from "antd";
-// import {} from '@ant-design/icons'
+import { Link } from "react-router-dom";
+import {
+  DashboardOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 
-import { sideMenuItems } from "./SideMenuItems";
+import AuthContext from "../store/auth.context";
+// import { sideMenuItems } from "./SideMenuItems";
 
 import "./SideMenu.css";
 
+const iconStyle = { color: "var(--dk-gray-500)" };
+
 function SideMenu({ selectedKey }) {
+  const authCtx = useContext(AuthContext);
+
+  const sideMenuItems = [
+    {
+      key: "s1",
+      icon: <DashboardOutlined style={iconStyle} />,
+      label: authCtx.isLoggedIn ? (
+        <Link to="/">Dashboard</Link>
+      ) : (
+        <Link to="/">Dashboard</Link>
+      ),
+    },
+    {
+      key: "s2",
+      icon: <VideoCameraOutlined style={iconStyle} />,
+      label: "side 2",
+    },
+    {
+      key: "s3",
+      icon: <UploadOutlined style={iconStyle} />,
+      label: "side 3",
+    },
+  ];
+
   return (
     <Menu
       className="side-menu"

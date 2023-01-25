@@ -1,3 +1,8 @@
 .login-form-style {
   background-color: var(--dk-dark-bg);
 }
+
+.login-form-addon-icon {
+  background-color: var(--dk-gray-200);
+  border-radius: 8px;
+}

@@ -89,7 +89,7 @@ function EmailForm(props) {
       >
         <Input
           style={{
-            backgroundColor: "var(--dk-gray-400)",
+            backgroundColor: "var(--dk-gray-200)",
             borderRadius: "8px",
           }}
           type="email"

@@ -132,6 +132,7 @@ const LoginForm = () => {
           hasFeedback
         >
           <Input
+            className="login-form-addon-icon"
             addonBefore={<MailOutlined />}
             allowClear
             placeholder="Enter email address"
@@ -145,6 +146,7 @@ const LoginForm = () => {
           hasFeedback
         >
           <Input.Password
+            className="login-form-addon-icon"
             addonBefore={<LockOutlined />}
             placeholder="Enter password"
           />

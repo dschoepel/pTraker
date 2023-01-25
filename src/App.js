@@ -13,7 +13,6 @@ import TokenService from "./components/services/token.service";
 
 import SideBar from "./components/ui/SideBar";
 import Heading from "./components/ui/Heading";
-import Home from "./components/pages/Home";
 import PublicHome from "./components/pages/PublicHome";
 import UserHome from "./components/pages/UserHome";
 import Login from "./components/pages/Login";
@@ -26,6 +25,7 @@ import EmailVerification from "./components/pages/EmailVerification";
 import MyProfile from "./components/pages/MyProfile";
 import PasswordReset from "./components/pages/PasswordReset";
 import TickerLookup from "./components/pages/TickerLookup";
+import CreatePortfolio from "./components/pages/CreatePortfolio";
 
 import "./App.css";
 
@@ -97,7 +97,7 @@ const App = () => {
               {authCtx.isLoggedIn && (
                 <Route path="/myProfile" element={<MyProfile />} />
               )}
-              <Route path="*" element={<Home />} />
+              <Route path="*" element={<PublicHome />} />
             </Routes>
           </Layout>
 

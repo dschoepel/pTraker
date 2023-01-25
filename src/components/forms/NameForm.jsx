@@ -82,7 +82,7 @@ function NameForm(props) {
         hasFeedback
       >
         <Input
-          style={{ backgroundColor: "var(--dk-gray-400)", borderRadius: "8px" }}
+          style={{ backgroundColor: "var(--dk-gray-200)", borderRadius: "8px" }}
           addonBefore={<UserOutlined />}
           allowClear
           placeholder="Full Name or Nickname"

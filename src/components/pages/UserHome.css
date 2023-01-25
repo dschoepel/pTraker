@@ -1,3 +1,40 @@
 .pt-card-style {
   background-color: var(--dk-dark-bg);
 }
+
+.dashboard-row {
+  align-items: flex-end;
+  padding: 0 2em 2em 2em;
+}
+.dashboard-heading {
+  font-size: 300%;
+  color: var(--dk-gray-100);
+  font-weight: bold;
+}
+
+.dashboard-button {
+  /* margin-bottom: 5px; */
+}
+.dashboard-icon {
+  margin-right: 1rem;
+}
+
+/* .ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-thead > tr > td {
+  color: var(--dk-gray-100);
+  font-weight: bold;
+  background-color: var(--dk-dark-bg);
+} */
+
+/* .ant-table-thead {
+  border-color: var(--dk-dark-bg);
+} */
+
+/* table {
+  border-color: var(--dk-dark-bg);
+} */
+
+/* .portfolio-table {
+  background-color: var(--dk-dark-bg);
+  color: var(--dk-gray-300);
+} */

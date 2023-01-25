@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Input, Typography, Alert, Divider, Space } from "antd";
 import {
@@ -29,6 +29,13 @@ const Register = () => {
   const [successful, setSuccessful] = useState(false);
   const [eMessage, setEMessage] = useState("");
   const navigate = useNavigate();
+  const nameInput = useRef(null);
+
+  useEffect(() => {
+    if (nameInput.current) {
+      nameInput.current.focus();
+    }
+  }, [nameInput]);
 
   function getErrorMsg(statusCode, message) {
     let errorMessage = "";
@@ -134,9 +141,11 @@ const Register = () => {
           hasFeedback
         >
           <Input
+            className="registration-form-addon-icon"
             addonBefore={<UserOutlined />}
             allowClear
             placeholder="Full Name or Nickname"
+            ref={nameInput}
           />
         </Form.Item>
         <Form.Item
@@ -149,6 +158,7 @@ const Register = () => {
           hasFeedback
         >
           <Input
+            className="registration-form-addon-icon"
             addonBefore={<MailOutlined />}
             allowClear
             placeholder="E-mail"
@@ -179,6 +189,7 @@ const Register = () => {
           hasFeedback
         >
           <PasswordInput
+            className="registration-form-addon-icon"
             addonBefore={<LockOutlined />}
             allowClear
             placeholder="password"
@@ -212,6 +223,7 @@ const Register = () => {
           hasFeedback
         >
           <PasswordInput
+            className="registration-form-addon-icon"
             addonBefore={<SafetyOutlined />}
             allowClear
             placeholder="confirmPassword"

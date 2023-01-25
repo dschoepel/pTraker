@@ -446,7 +446,7 @@ const changePassword = (currentPassword, newPassword, confirmPassword) => {
     });
 };
 
-// Handle situation where refresh token expired, token cannot be refreshed, use must log in again
+// Handle situation where refresh token expired, token cannot be refreshed, user must log in again
 const expiredLogin = () => {
   let content = "";
   logout();
@@ -463,6 +463,7 @@ const expiredLogin = () => {
   }, 3000);
   return content;
 };
+
 const AuthService = {
   register,
   login,

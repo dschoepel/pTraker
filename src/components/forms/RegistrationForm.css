@@ -1,3 +1,8 @@
 .registration-form-title {
   color: var(--logo-yellow-color);
 }
+
+.registration-form-addon-icon {
+  background-color: var(--dk-gray-200);
+  border-radius: 8px;
+}
