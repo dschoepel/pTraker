@@ -19,6 +19,12 @@
   margin-right: 1rem;
 }
 
+.dashboard-trash-icon {
+  /* margin-left: 15px; */
+  /* width: 3em;
+  text-align: center; */
+}
+
 /* .ant-table-wrapper .ant-table-thead > tr > th,
 .ant-table-wrapper .ant-table-thead > tr > td {
   color: var(--dk-gray-100);

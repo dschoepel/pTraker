@@ -52,19 +52,22 @@ const CreatePortfolioForm = ({ handleCancel, onOk }) => {
           console.log(
             "Response from Create portfolio: ",
             response,
-            response.success
+            response?.success
           );
           if (response.success) {
             setSuccessful(true);
             console.log("success about to navigate");
             navigate("/");
           }
+          console.log("....>", response);
           setEMessage(
             getErrorMsg(response.data.errorStatus, response.data.message)
           );
-          setSuccessful(response.success);
+          setSuccessful(response.data.success);
         },
         (error) => {
+          console.log("-----> ", error);
+
           const resMessage =
             (error.response &&
               error.response.data &&
@@ -76,7 +79,7 @@ const CreatePortfolioForm = ({ handleCancel, onOk }) => {
           setSuccessful(false);
         }
       )
-      .catch();
+      .catch((error) => {});
     setLoading(false);
   }
 

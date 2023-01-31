@@ -1,0 +1,13 @@
+.portfolio-edit-addon-icon {
+  background-color: var(--dk-gray-200);
+  border-radius: 8px;
+}
+
+.portfolio-edit-icon {
+  margin-top: 4px;
+}
+
+.portfolio-edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+}

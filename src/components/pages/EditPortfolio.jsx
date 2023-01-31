@@ -1,21 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Button, Input, Alert, Spin, Modal, Layout } from "antd";
+import { Form, Button, Space, Input, Alert, Spin, Modal, Layout } from "antd";
 import { TbFileDollar } from "react-icons/tb";
 
 import PortfolioService from "../services/portfolio.service";
 import { contentStyle } from "../ui/ContentStyle";
-import "./CreatePortfolio.css";
+import "./EditPortfolio.css";
 
 const { Content } = Layout;
 
-function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
-  const [portfolioName, setPortfolioName] = useState("");
-  const [portfolioDescription, setPortfolioDescription] = useState("");
-  const [assets] = useState([]);
+function EditPortfolio({
+  record,
+  isModalOpen,
+  setIsModalOpen,
+  setPortfolioChanged,
+}) {
+  const [portfolioName, setPortfolioName] = useState(
+    record.portfolioName.trim()
+  );
+  const [portfolioDescription, setPortfolioDescription] = useState(
+    record.portfolioDescription.trim()
+  );
+  // const [nameChanged, setNameChanged] = useState(false);
+  // const [descriptionChanged, setDescriptionChanged] = useState(false);
+  const [allowSaveChanges, setAllowSaveChanges] = useState(false);
   const [loading, setLoading] = useState(false);
   const [eMessage, setEMessage] = useState("");
   const [successful, setSuccessful] = useState(false);
-  const [createPortfolioForm] = Form.useForm();
+  const [editPortfolioForm] = Form.useForm();
 
   const portfolioNameInput = useRef(null);
 
@@ -25,11 +36,12 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
     }
   }, [portfolioNameInput]);
 
+  // TODO Modify for changing portfolio names...
   function getErrorMsg(statusCode, message) {
     let errorMessage = "";
     switch (statusCode) {
-      case "PORTFOLIO_NAME_ERROR":
-        errorMessage = `You already have a portfolio with this name!`;
+      case "PORTFOLIO_NOT_CHANGED":
+        errorMessage = `No changes were made for: ${portfolioName}!`;
         break;
       default:
         errorMessage = message;
@@ -38,20 +50,20 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
   }
 
   function handleOk() {
-    createPortfolioForm.submit();
+    editPortfolioForm.submit();
   }
 
   function onFinish({ portfolioName, portfolioDescription }) {
     setLoading(true);
-    PortfolioService.addUserPortfolio(
+    PortfolioService.editPortfolio(
       portfolioName,
       portfolioDescription,
-      assets
+      record._id
     )
       .then(
         (response) => {
           console.log(
-            "Response from Create portfolio: ",
+            "Response from Edit portfolio: ",
             response,
             response.success
           );
@@ -60,7 +72,9 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
             setIsModalOpen(false);
             setPortfolioChanged(true);
           }
-          setEMessage(getErrorMsg(response.statusCode, response.message));
+          setEMessage(
+            getErrorMsg(response.data.errorStatus, response.data.message)
+          );
           setSuccessful(response.success);
         },
         (error) => {
@@ -79,18 +93,47 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
     setLoading(false);
   }
 
-  function onValuesChange(portfolioName, portfolioDescription) {
-    if (portfolioName) {
-      setPortfolioName(portfolioName);
+  function onValuesChange(values) {
+    let nameChgd = false;
+    let descChgd = false;
+
+    if (values.portfolioName) {
+      if (values.portfolioName !== record.portfolioName.trim()) {
+        nameChgd = true;
+        setPortfolioName(values.portfolioName.trim());
+        // setNameChanged(true);
+      } else {
+        // setNameChanged(false);
+        nameChgd = false;
+      }
     }
-    if (portfolioDescription) {
-      setPortfolioDescription(portfolioDescription);
+    // if (values.portfolioName !== record.portfolioName ) {
+    //   setPortfolioName(portfolioName);
+    //   setNameChanged(true);
+    //   console.log(nameChanged ? "true" : "false");
+    // }
+
+    if (values.portfolioDescription) {
+      if (values.portfolioDescription !== record.portfolioDescription.trim()) {
+        descChgd = true;
+        setPortfolioDescription(values.portfolioDescription.trim());
+        // setDescriptionChanged(true);
+      } else {
+        descChgd = false;
+        // setDescriptionChanged(false);
+      }
+    }
+
+    if (nameChgd || descChgd) {
+      setAllowSaveChanges(true);
+    } else {
+      setAllowSaveChanges(false);
     }
   }
 
   const handleCancel = () => {
     setIsModalOpen(false);
-    createPortfolioForm.resetFields();
+    editPortfolioForm.resetFields();
   };
 
   return (
@@ -98,28 +141,25 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
       <Modal
         destroyOnClose={true}
         bodyStyle={{ backgroundColor: "var(--dk-dark-bg)" }}
-        title="Create a New Portfolio"
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button type="primary" onClick={handleOk} key="submit">
-            Create Portfolio
-          </Button>,
-        ]}
-        okText="Create Portfolio"
+        title="Edit Portfolio"
+        footer={null}
+        okText="Save Changes"
         open={isModalOpen}
         onCancel={handleCancel}
         maskClosable={false}
-        wrapClassName="portfolio-create-modal-style"
+        wrapClassName="portfolio-edit-modal-style"
         onOk={handleOk}
       >
         <Form
-          className="portfolio-create-form-style"
-          form={createPortfolioForm}
+          className="portfolio-edit-form-style"
+          form={editPortfolioForm}
           labelCol={{ xs: { span: 12 } }}
           wrapperCol={{ xs: { span: 12 } }}
-          initialValues={{ remember: true }}
+          initialValues={{
+            remember: true,
+            portfolioName: portfolioName,
+            portfolioDescription: portfolioDescription,
+          }}
           onFinish={onFinish}
           onValuesChange={onValuesChange}
           autoComplete="off"
@@ -143,7 +183,7 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
             hasFeedback
           >
             <Input
-              className="portfolio-create-addon-icon"
+              className="portfolio-edit-addon-icon"
               addonBefore={
                 <TbFileDollar
                   className={"portfolio-create-icon"}
@@ -174,29 +214,29 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
             hasFeedback
           >
             <Input.TextArea
-              // addonBefore={<TbFileDescription />}
               allowClear
               placeholder="Enter the portfolio description"
               autoSize
             />
           </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            {/* <Space>
-              <Button onClick={handleCancel}>Cancel</Button>
-              <Button
-                form="createPortfolio"
-                key="submit"
-                type="primary"
-                htmlType="submit"
-              >
-                Create Portfolio
+
+          <div className="portfolio-edit-buttons">
+            <Space wrap={true}>
+              <Button key="back" onClick={handleCancel}>
+                Cancel
               </Button>
-            </Space> */}
-          </Form.Item>
-          {/* <Button form="createPortfolio" key="submit" htmlType="submit">
-            Create Portfolio
-          </Button> */}
-          {loading && <Spin tip="Creating portfolio..." />}
+              {allowSaveChanges ? (
+                <Button type="primary" onClick={handleOk} key="submit">
+                  Save Changes
+                </Button>
+              ) : (
+                <Button disabled type="primary" onClick={handleOk} key="submit">
+                  Save Changes
+                </Button>
+              )}
+            </Space>
+          </div>
+          {loading && <Spin tip="Saving changes to the portfolio..." />}
           {eMessage && !successful ? (
             <Alert message={eMessage} type="error" showIcon />
           ) : null}
@@ -205,5 +245,4 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
     </Content>
   );
 }
-
-export default CreatePortfolio;
+export default EditPortfolio;

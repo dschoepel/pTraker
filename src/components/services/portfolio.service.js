@@ -24,18 +24,61 @@ const addUserPortfolio = (portfolioName, portfolioDescription, assets) => {
       assets: assets,
     })
     .then((response) => {
-      console.log("add portfolio response: ", response);
       return {
         success: true,
         statusCode: 201,
         data: response,
       };
     })
-    .catch((error) => {
+    .catch(function (error) {
       console.log("Error caught addUserPortfolio: ", error);
+
+      return {
+        success: error.response.data.success,
+        errorFlag: error.response.data.errorFlag,
+        statusCode: error.response.data.errorStatus,
+        message: error.response.data.message,
+      };
     });
 };
 
-const PortfolioService = { getUserPortfolios, addUserPortfolio };
+const editPortfolio = (portfolioName, portfolioDescription, portfolioId) => {
+  return api
+    .post("/portfolio/updatePortfolio", {
+      portfolioName: portfolioName,
+      portfolioDescription: portfolioDescription,
+      portfolioId: portfolioId,
+    })
+    .then((response) => {
+      console.log("Updated portfolio", portfolioName, portfolioId);
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log("Error caught editPortfolio: ", error);
+    });
+};
+
+const deletePortfolio = (portfolioRecord) => {
+  return api
+    .post("/portfolio/deletePortfolio", { portfolioId: portfolioRecord._id })
+    .then((response) => {
+      console.log(
+        "Deleting portfolio",
+        portfolioRecord.portfolioName,
+        portfolioRecord._id
+      );
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log("Error caught deletePortfolio: ", error);
+    });
+};
+
+const PortfolioService = {
+  getUserPortfolios,
+  addUserPortfolio,
+  editPortfolio,
+  deletePortfolio,
+};
 
 export default PortfolioService;

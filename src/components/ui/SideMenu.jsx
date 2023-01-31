@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import {
-  DashboardOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { DashboardOutlined, UploadOutlined } from "@ant-design/icons";
+import { BsFolder2Open } from "react-icons/bs";
 
 import AuthContext from "../store/auth.context";
 // import { sideMenuItems } from "./SideMenuItems";
@@ -29,7 +26,7 @@ function SideMenu({ selectedKey }) {
     },
     {
       key: "s2",
-      icon: <VideoCameraOutlined style={iconStyle} />,
+      icon: <BsFolder2Open style={iconStyle} />,
       label: "side 2",
     },
     {
