@@ -1,8 +1,14 @@
-/* .search-stocktickers .ant-input {
+.search-stocktickers .ant-input {
   font-weight: bold;
-} */
+  color: var(--dk-gray-100);
+}
 
-/* .ant-input-search .ant-input {
+.ant-input-group-wrapper {
+  width: 70%;
+  background-color: var(--dk-dark-bg);
+}
+
+.ant-input-search .ant-input {
   color: var(--navbar-bg-color);
   font-weight: bold;
-} */
+}

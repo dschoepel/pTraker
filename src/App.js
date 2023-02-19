@@ -28,6 +28,7 @@ import TickerLookup from "./components/pages/TickerLookup";
 import CreatePortfolio from "./components/pages/CreatePortfolio";
 
 import "./App.css";
+import PortfolioService from "./components/services/portfolio.service";
 
 const { getIsCollapsed, setIsCollapsed } = SidebarService;
 
@@ -72,7 +73,15 @@ const App = () => {
                 <Route path="/" element={<PublicHome />} />
               ) : null}
               {authCtx.isLoggedIn ? (
-                <Route path="/" element={<UserHome />} />
+                <Route
+                  path="/"
+                  element={<UserHome />}
+                  // loader={async () => {
+                  //   const userPortfolios =
+                  //     await PortfolioService.getUserPortfolios();
+                  //   return userPortfolios.data;
+                  // }}
+                />
               ) : null}
               <Route path="/register" element={<Register />} />
               <Route

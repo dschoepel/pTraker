@@ -20,6 +20,8 @@ async function fetchStockTickerList(searchText) {
         ticker: quotes.symbol,
         quoteType: quotes.quoteType,
         exchDisp: quotes.exchDisp,
+        sector: quotes.sector,
+        industry: quotes.industry,
       }))
     );
 }

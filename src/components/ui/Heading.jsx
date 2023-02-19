@@ -62,7 +62,20 @@ function Heading({ toggleCollapsed, collapsed }) {
         </Space>
       ) : null}
       {isLoggedIn ? (
-        <HeadingMenu selectedKey={"myProfile"}></HeadingMenu>
+        <Space>
+          {/* <div
+            style={{
+              color: "var(--dk-gray-100)",
+              fontSize: "150%",
+              width: "5em",
+              // height: "60px",
+              wordWrap: "break-word",
+            }}
+          >
+            <Typography.Paragraph>Dave Schoepel</Typography.Paragraph>
+          </div> */}
+          <HeadingMenu selectedKey={"myProfile"}></HeadingMenu>
+        </Space>
       ) : null}
     </Header>
   );

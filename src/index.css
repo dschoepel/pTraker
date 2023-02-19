@@ -19,6 +19,15 @@
   --sidebar-bg-color: #0e0f26;
   /* --sidebar-bg-color: #03045e; */
   --logo-yellow-color: #ffc107;
+  --pt-red-100: #ff4d4f;
+  --pt-green-100: #f6ffed;
+  --pt-green-200: #d9f7be;
+  --pt-green-300: #b7eb8f;
+  --pt-green-400: #95de64;
+  --pt-green-500: #73d13d;
+  --pt-green-600: #52c41a;
+  --pt-green-700: #389e0d;
+  --pt-primary-hover: #56527d;
   --sidebar-width: 19em;
 }
 
@@ -37,5 +46,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1;
-  font-weight: 400;
+  /* font-weight: 400; */
 }

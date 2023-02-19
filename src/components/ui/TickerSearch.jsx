@@ -1,15 +1,25 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Search from "antd/lib/input/Search";
 import debounce from "lodash/debounce";
 
 import fetchStockTickerList from "../services/fetchStockTickerList.service";
+import PortfolioService from "../services/portfolio.service";
 import "./TickerSearch.css";
+import Modal from "antd/es/modal/Modal";
 
 function TickerSearch({ setTickerTableData, setSearchText }) {
   const [fetching, setFetching] = useState(false);
   const [tickerSearchText, setTickerSearchText] = useState("");
 
+  const searchInput = useRef(null);
+
   const onSearch = () => {};
+
+  useEffect(() => {
+    if (searchInput.current) {
+      searchInput.current.focus();
+    }
+  }, [searchInput]);
 
   const debounceResults = useMemo(() => {
     const handleSearchChange = (event) => {
@@ -20,8 +30,9 @@ function TickerSearch({ setTickerTableData, setSearchText }) {
       // setShowTickers(true);
 
       if (event.target.value.length !== 0 && event.target.value !== " ") {
-        fetchStockTickerList(event.target.value).then((response) => {
-          setTickerTableData(response);
+        PortfolioService.getQuotes(event.target.value).then((response) => {
+          console.log("getQuotes: ", response.searchResult);
+          setTickerTableData(response.searchResult);
         });
       } else {
         setTickerTableData([]);
@@ -39,13 +50,15 @@ function TickerSearch({ setTickerTableData, setSearchText }) {
 
   return (
     <Search
+      enterButton={true}
       className={"search-stocktickers"}
       placeholder="ticker search"
-      allowClear
+      allowClear={false}
       loading={fetching}
       onSearch={onSearch}
       onChange={debounceResults}
       onBlur={onSearchBlur}
+      ref={searchInput}
     />
   );
 }

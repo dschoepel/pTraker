@@ -1,0 +1,29 @@
+.color-bk-green {
+  background-color: var(--pt-green-700);
+  color: var(--dk-gray-100);
+  border-radius: 5px;
+  padding: 0 4px 0 4px;
+  font-size: 75%;
+}
+
+.color-bk-red {
+  background-color: var(--pt-red-100);
+  color: var(--dk-gray-100);
+  border-radius: 5px;
+  padding: 0 4px 0 4px;
+  font-size: 75%;
+}
+
+.color-green {
+  color: var(--pt-green-700);
+  border-radius: 5px;
+  padding: 0 4px 0 4px;
+  font-size: 100%;
+}
+
+.color-red {
+  color: var(--pt-red-100);
+  border-radius: 5px;
+  padding: 0 4px 0 4px;
+  font-size: 100%;
+}
