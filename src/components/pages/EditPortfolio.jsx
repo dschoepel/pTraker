@@ -15,10 +15,10 @@ function EditPortfolio({
   setPortfolioChanged,
 }) {
   const [portfolioName, setPortfolioName] = useState(
-    record.portfolioName.trim()
+    record.portfolioDetail.portfolioName.trim()
   );
   const [portfolioDescription, setPortfolioDescription] = useState(
-    record.portfolioDescription.trim()
+    record.portfolioDetail.portfolioDescription.trim()
   );
   // const [nameChanged, setNameChanged] = useState(false);
   // const [descriptionChanged, setDescriptionChanged] = useState(false);
@@ -31,10 +31,11 @@ function EditPortfolio({
   const portfolioNameInput = useRef(null);
 
   useEffect(() => {
+    console.log("record in: ", record);
     if (portfolioNameInput.current) {
       portfolioNameInput.current.focus();
     }
-  }, [portfolioNameInput]);
+  }, [portfolioNameInput, record]);
 
   // TODO Modify for changing portfolio names...
   function getErrorMsg(statusCode, message) {
@@ -58,7 +59,7 @@ function EditPortfolio({
     PortfolioService.editPortfolio(
       portfolioName,
       portfolioDescription,
-      record._id
+      record.portfolioDetail._id
     )
       .then(
         (response) => {
@@ -70,7 +71,11 @@ function EditPortfolio({
           if (response.success) {
             setSuccessful(true);
             setIsModalOpen(false);
-            setPortfolioChanged(true);
+            setPortfolioChanged({
+              changed: true,
+              changeType: "EDIT_PORTFOLIO",
+              portfolioId: record.portfolioDetail._id,
+            });
           }
           setEMessage(
             getErrorMsg(response.data.errorStatus, response.data.message)
@@ -98,29 +103,25 @@ function EditPortfolio({
     let descChgd = false;
 
     if (values.portfolioName) {
-      if (values.portfolioName !== record.portfolioName.trim()) {
+      if (
+        values.portfolioName !== record.portfolioDetail.portfolioName.trim()
+      ) {
         nameChgd = true;
         setPortfolioName(values.portfolioName.trim());
-        // setNameChanged(true);
       } else {
-        // setNameChanged(false);
         nameChgd = false;
       }
     }
-    // if (values.portfolioName !== record.portfolioName ) {
-    //   setPortfolioName(portfolioName);
-    //   setNameChanged(true);
-    //   console.log(nameChanged ? "true" : "false");
-    // }
 
     if (values.portfolioDescription) {
-      if (values.portfolioDescription !== record.portfolioDescription.trim()) {
+      if (
+        values.portfolioDescription !==
+        record.portfolioDetail.portfolioDescription.trim()
+      ) {
         descChgd = true;
         setPortfolioDescription(values.portfolioDescription.trim());
-        // setDescriptionChanged(true);
       } else {
         descChgd = false;
-        // setDescriptionChanged(false);
       }
     }
 

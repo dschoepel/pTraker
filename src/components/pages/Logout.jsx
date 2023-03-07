@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Alert, Layout } from "antd";
 
 import AuthService from "../services/auth.service";
+import PortfolioService from "../services/portfolio.service";
 import AuthContext from "../store/auth.context";
 import { ImageContext } from "../store/image.context";
 import { contentStyle } from "../ui/ContentStyle";
@@ -16,6 +17,7 @@ function Logout() {
 
   useEffect(() => {
     console.log("authCtx.alogout()");
+    PortfolioService.setLocalPortfolioId("");
     authCtx.aLogout();
     AuthService.logout();
     setImageContext(null);

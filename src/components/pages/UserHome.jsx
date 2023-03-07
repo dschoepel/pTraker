@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 
 import {
   Layout,
@@ -39,6 +39,7 @@ const { Red, Green, C } = Color;
 
 const UserHome = () => {
   // const userStuff = useLoaderData();
+  const { portfolioId } = useParams();
 
   const [portfolioContext, setPortfolioContext] = useState({});
   const [testUserPortfolios, setTestUserPortfolios] = useState([]);
@@ -92,7 +93,8 @@ const UserHome = () => {
   console.log(
     "1 userHome: ",
     userPortfolios,
-    userPortfolios.length > 0 ? "true" : "false"
+    userPortfolios.length > 0 ? "true" : "false",
+    portfolioId
   );
 
   const columns = [

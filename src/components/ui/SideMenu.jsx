@@ -17,29 +17,20 @@ function SideMenu({ selectedKey }) {
   const sideMenuItems = [
     {
       key: "s1",
-      icon: <DashboardOutlined style={iconStyle} />,
-      label: authCtx.isLoggedIn ? (
-        <Link to="/">Dashboard</Link>
-      ) : (
-        <Link to="/">Dashboard</Link>
-      ),
+      icon: <BsFolder2Open style={iconStyle} />,
+      label: "side 1",
     },
     {
       key: "s2",
-      icon: <BsFolder2Open style={iconStyle} />,
-      label: "side 2",
-    },
-    {
-      key: "s3",
       icon: <UploadOutlined style={iconStyle} />,
-      label: "side 3",
+      label: "side 2",
     },
   ];
 
   return (
     <Menu
       className="side-menu"
-      // theme="dark"
+      theme="dark"
       mode="vertical"
       defaultSelectedKeys={[selectedKey]}
       items={sideMenuItems}

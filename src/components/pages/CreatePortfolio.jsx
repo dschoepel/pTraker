@@ -8,7 +8,11 @@ import "./CreatePortfolio.css";
 
 const { Content } = Layout;
 
-function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
+function CreatePortfolio({
+  isAddPortfolioModalOpen,
+  setIsAddPortfolioModalOpen,
+  setListChanged,
+}) {
   const [portfolioName, setPortfolioName] = useState("");
   const [portfolioDescription, setPortfolioDescription] = useState("");
   const [assets] = useState([]);
@@ -57,8 +61,12 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
           );
           if (response.success) {
             setSuccessful(true);
-            setIsModalOpen(false);
-            setPortfolioChanged(true);
+            setIsAddPortfolioModalOpen(false);
+            setListChanged({
+              changed: true,
+              changeType: "ADDED_PORTFOLIO",
+              portfolioId: response.data.data.portfolioId,
+            });
           }
           setEMessage(getErrorMsg(response.statusCode, response.message));
           setSuccessful(response.success);
@@ -89,7 +97,7 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
   }
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsAddPortfolioModalOpen(false);
     createPortfolioForm.resetFields();
   };
 
@@ -108,7 +116,7 @@ function CreatePortfolio({ isModalOpen, setIsModalOpen, setPortfolioChanged }) {
           </Button>,
         ]}
         okText="Create Portfolio"
-        open={isModalOpen}
+        open={isAddPortfolioModalOpen}
         onCancel={handleCancel}
         maskClosable={false}
         wrapClassName="portfolio-create-modal-style"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { ConfigProvider, Layout } from "antd";
 
@@ -26,6 +26,7 @@ import MyProfile from "./components/pages/MyProfile";
 import PasswordReset from "./components/pages/PasswordReset";
 import TickerLookup from "./components/pages/TickerLookup";
 import CreatePortfolio from "./components/pages/CreatePortfolio";
+import UserDashboard from "./components/pages/UserDashboard";
 
 import "./App.css";
 import PortfolioService from "./components/services/portfolio.service";
@@ -34,11 +35,17 @@ const { getIsCollapsed, setIsCollapsed } = SidebarService;
 
 const App = () => {
   const authCtx = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const [imageContext, setImageContext] = useState(
     authCtx.isLoggedIn ? TokenService.getUserProfileImage : null
   );
   const [collapsed, setCollapsed] = useState(getIsCollapsed);
+  const [listChanged, setListChanged] = useState({
+    changed: false,
+    changeType: "",
+    portfolioId: "",
+    portfolioName: "",
+  });
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -57,10 +64,35 @@ const App = () => {
     }
   }, [authCtx]);
 
+  useEffect(() => {
+    async function runEffect() {
+      if (listChanged.changed && authCtx.isLoggedIn) {
+        console.log("the list was changed...", listChanged);
+        const response = await PortfolioService.handleListChanges(
+          listChanged.changeType,
+          listChanged.portfolioId,
+          listChanged.portfolioName
+        );
+        console.log("handleListChange response: ", response);
+        if (response.action === "navigate") {
+          console.log("Navigating to: ", response.to);
+
+          navigate(`/dashboard/${response.to}`);
+        }
+      }
+    }
+
+    runEffect();
+  }, [authCtx.isLoggedIn, listChanged, navigate]);
+
   return (
     <ImageContext.Provider value={[imageContext, setImageContext]}>
       <Layout hasSider="true">
-        <SideBar collapsed={collapsed} />
+        <SideBar
+          collapsed={collapsed}
+          listChanged={listChanged}
+          setListChanged={setListChanged}
+        />
         <Layout className="site-layout">
           <Heading
             toggleCollapsed={toggleCollapsed}
@@ -72,17 +104,22 @@ const App = () => {
               {!authCtx.isLoggedIn ? (
                 <Route path="/" element={<PublicHome />} />
               ) : null}
-              {authCtx.isLoggedIn ? (
+              {/* {authCtx.isLoggedIn ? (
                 <Route
-                  path="/"
-                  element={<UserHome />}
+                  path="/dashboard/"
+                  element={
+                    <UserDashboard
+                      listChanged={listChanged}
+                      setListChanged={setListChanged}
+                    />
+                  }
                   // loader={async () => {
                   //   const userPortfolios =
                   //     await PortfolioService.getUserPortfolios();
                   //   return userPortfolios.data;
                   // }}
                 />
-              ) : null}
+              ) : null} */}
               <Route path="/register" element={<Register />} />
               <Route
                 path="/verifyRegistration"
@@ -106,6 +143,28 @@ const App = () => {
               <Route path="/passwordReset" element={<PasswordReset />} />
               {authCtx.isLoggedIn && (
                 <Route path="/myProfile" element={<MyProfile />} />
+              )}
+              {authCtx.isLoggedIn && (
+                <Route
+                  path="/dashboard"
+                  element={
+                    <UserDashboard
+                      listChanged={listChanged}
+                      setListChanged={setListChanged}
+                    />
+                  }
+                />
+              )}
+              {authCtx.isLoggedIn && (
+                <Route
+                  path="/dashboard/:portfolioId"
+                  element={
+                    <UserDashboard
+                      listChanged={listChanged}
+                      setListChanged={setListChanged}
+                    />
+                  }
+                />
               )}
               <Route path="*" element={<PublicHome />} />
             </Routes>

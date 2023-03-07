@@ -4,6 +4,7 @@ import { Form, Button, Input, Alert, Spin, Space, message } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 
 import AuthService from "../services/auth.service";
+import PortfolioService from "../services/portfolio.service";
 import TokenService from "../services/token.service";
 import AuthContext from "../store/auth.context";
 import { ImageContext } from "../store/image.context";
@@ -54,7 +55,10 @@ const LoginForm = () => {
           const { profileImage } = TokenService.getUser();
           setImageContext(profileImage);
           console.log(authCtx.profileImage);
-          navigate("/");
+          // Get portfolios for user and set first one...
+          const toPortfolio = PortfolioService.getLocalPortfolioId();
+          console.log("Logging in defaulte portfolio id: ", toPortfolio);
+          navigate(`/dashboard/${toPortfolio}`);
           // window.location.reload(false);
         } else {
           if (statusCode === 401) {
