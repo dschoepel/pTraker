@@ -1,0 +1,18 @@
+.pt-card-style {
+  background-color: var(--dk-dark-bg);
+}
+
+.dashboard-row {
+  /* align-items: flex-start; */
+  padding: 2rem 2em 2em 2em;
+  background-color: var(--dk-darker-bg);
+}
+.dashboard-heading {
+  font-size: 300%;
+  color: var(--dk-gray-100);
+  font-weight: bold;
+}
+
+.dashboard-icon {
+  margin-right: 1rem;
+}

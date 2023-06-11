@@ -1,14 +1,17 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Tooltip } from "antd";
+import { Menu, Tooltip, Button } from "antd";
 import { DashboardOutlined, UploadOutlined } from "@ant-design/icons";
 import { FcMoneyTransfer } from "react-icons/fc";
+import { RiPlayListAddLine } from "react-icons/ri";
 
 import AuthContext from "../store/auth.context";
-import PortfolioServices from "../services/portfolio.service";
+import PortfolioService from "../services/portfolio.service";
+import CreatePortfolio from "../pages/CreatePortfolio";
 import "./DashboardMenu.css";
+import _ from "lodash";
 
-function getItem(label, key, icon, children, type) {
+function getItem(label, key, icon, type, children) {
   return {
     key,
     icon,
@@ -23,10 +26,11 @@ function DashboardMenu({ listChanged, setListChanged }) {
     { key: "p1", label: "Portfolios" },
   ]);
   const { isLoggedIn } = useContext(AuthContext);
+  const [isAddPortfolioModalOpen, setIsAddPortfolioModalOpen] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-    PortfolioServices.getUserPortfolios().then((portfolios) => {
+    PortfolioService.getUserPortfolios().then((portfolios) => {
       if ((mounted && isLoggedIn) || listChanged.changed) {
         const menuItems = [
           getItem(
@@ -47,12 +51,12 @@ function DashboardMenu({ listChanged, setListChanged }) {
         ];
         setPortfolioMenu(menuItems);
         console.log("portfolios... ", portfolios);
-        const toPortfolio = PortfolioServices.setDefaultPortfolio(
+        const toPortfolio = PortfolioService.setDefaultPortfolio(
           portfolios.data,
           ""
         );
         console.log("defaultPortfolio Id", toPortfolio);
-        PortfolioServices.setLocalPortfolioId(toPortfolio);
+        PortfolioService.setLocalPortfolioId(toPortfolio);
         setListChanged({ changed: false });
       }
     });
@@ -60,8 +64,13 @@ function DashboardMenu({ listChanged, setListChanged }) {
     return () => (mounted = false);
   }, [isLoggedIn, listChanged.changed, setListChanged]);
 
-  function menuClicked(e) {
-    // console.log("Menu clicked:", e);
+  const menuItem = [
+    getItem("Add Portfolio", "add_portfolio", <RiPlayListAddLine />),
+  ];
+
+  function menuClicked({ key, keyPath, selectedKeys, domEvent }) {
+    console.log("Menu clicked:", key, keyPath, selectedKeys, domEvent);
+    setIsAddPortfolioModalOpen(true);
   }
 
   return (
@@ -70,9 +79,22 @@ function DashboardMenu({ listChanged, setListChanged }) {
         <Menu
           theme="dark"
           mode="inline"
-          onSelect={menuClicked}
+          onClick={menuClicked}
           className="side-menu"
-          items={portfolioMenu}
+          items={menuItem}
+        />
+      ) : // <div>
+      //   <FcMoneyTransfer style={{ marginLeft: "2rem" }} />
+      // <Button type="link" onClick={menuClicked}>
+      //   Add Portfolio
+      // </Button>
+      // </div>
+      null}
+      {isAddPortfolioModalOpen ? (
+        <CreatePortfolio
+          setIsAddPortfolioModalOpen={setIsAddPortfolioModalOpen}
+          isAddPortfolioModalOpen={isAddPortfolioModalOpen}
+          setListChanged={setListChanged}
         />
       ) : null}
     </>

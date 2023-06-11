@@ -1,0 +1,48 @@
+label.ant-form-item-required {
+  color: var(--dk-gray-500) !important;
+}
+
+td.ant-table-cell.ant-table-row-expand-icon-cell {
+  border: none !important;
+}
+
+div.ant-table-wrapper.port-table-lot {
+  background-color: var(--dk-darker-bg);
+}
+
+/* .lot-add-modal-style {
+  width: 100%;
+} */
+
+.ant-table-cell.port-table-lot-row {
+  border-color: var(--dk-darker-bg) !important;
+}
+
+.port-temp-classname,
+.port-temp-not-zero {
+  background-color: var(--dk-darker-bg);
+  color: var(--dk-gray-500);
+  border-color: var(--dk-darker-bg);
+}
+
+.ant-table
+  .ant-table-container
+  .ant-table-content
+  table
+  thead.ant-table-thead
+  .ant-table-cell {
+  background-color: var(--dk-darker-bg);
+}
+
+th.ant-table-cell.port-table-lot-row::before {
+  background-color: var(--dk-darker-bg) !important ;
+}
+
+th.ant-table-cell.port-table-lot-row {
+  background-color: var(--dk-darker-bg) !important ;
+  border-start-start-radius: 0 !important;
+  border-start-end-radius: 0 !important;
+  color: var(--dk-gray-400) !important;
+  /* font-weight: 400 !important; */
+  font-size: normal;
+}

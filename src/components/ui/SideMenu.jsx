@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DashboardOutlined, UploadOutlined } from "@ant-design/icons";
-import { BsFolder2Open } from "react-icons/bs";
+import { ImNewspaper } from "react-icons/im";
 
 import AuthContext from "../store/auth.context";
 // import { sideMenuItems } from "./SideMenuItems";
@@ -13,17 +13,23 @@ const iconStyle = { color: "var(--dk-gray-500)" };
 
 function SideMenu({ selectedKey }) {
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const menuClicked = ({ key }) => {
+    console.log("Menu clicked: ", key);
+    navigate(`/${key}`);
+  };
 
   const sideMenuItems = [
     {
-      key: "s1",
-      icon: <BsFolder2Open style={iconStyle} />,
-      label: "side 1",
+      key: "news",
+      icon: <ImNewspaper style={iconStyle} />,
+      label: "Financial News",
     },
     {
-      key: "s2",
+      key: "upload",
       icon: <UploadOutlined style={iconStyle} />,
-      label: "side 2",
+      label: "Upload",
     },
   ];
 
@@ -31,9 +37,10 @@ function SideMenu({ selectedKey }) {
     <Menu
       className="side-menu"
       theme="dark"
-      mode="vertical"
+      mode="inline"
       defaultSelectedKeys={[selectedKey]}
       items={sideMenuItems}
+      onClick={menuClicked}
     ></Menu>
   );
 }

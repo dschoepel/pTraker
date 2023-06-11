@@ -1,0 +1,78 @@
+.portfolio-detail-divider-horizontal {
+  color: var(--dk-gray-100) !important;
+  /* background-color: var(--dk-gray-300); */
+}
+
+.ant-divider-horizontal.ant-divider-with-text-left::before,
+.ant-divider-horizontal.ant-divider-with-text-left::after {
+  border-bottom: 1px solid var(--dk-gray-400);
+}
+
+.ant-card-body .portfolio-detail-card {
+  /* border-bottom: 0px solid var(--dk-gray-700) !important; */
+  padding-left: 0 !important;
+}
+
+.portfolio-detail-header-assets {
+  font-weight: 600;
+  padding-bottom: 1dvh;
+  font-size: medium;
+  color: var(--dk-gray-400);
+  border-bottom: 1px solid var(--dk-gray-700);
+}
+
+.portfolio-detail-asset-row {
+  color: var(--dk-gray-100);
+  font-size: medium;
+}
+
+.port-table-asset-row {
+  border: none !important;
+  /* font-size: 80%; */
+}
+
+.symbol {
+  font-weight: bold;
+}
+
+.portfolio-detail-asset-row.display-name {
+  color: var(--dk-gray-500);
+  font-size: small;
+  font-weight: 400;
+  border-bottom: 1px solid var(--dk-gray-700);
+}
+
+/* tr {
+  background-color: var(--dk-dark-bg);
+} */
+
+/* thead.ant-table-thead,
+th.ant-table-cell {
+  background-color: var(--dk-dark-bg) !important;
+} */
+
+th.ant-table-cell {
+  color: var(--dk-gray-900) !important;
+  /* font-size: 1.5dvw; */
+}
+
+th.ant-table-cell.port-table-lot-row {
+  color: var(--dk-gray-700) !important;
+  font-size: medium;
+}
+
+.port-table-addlot-link {
+  font-weight: bold;
+}
+
+td.ant-table-cell {
+  /* font-size: 1.5dvw; */
+}
+
+td.ant-table-cell.ant-table-row-expand-icon-cell {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+a.port-table-asset-row {
+  /* font-size: 1.5dvw; */
+}

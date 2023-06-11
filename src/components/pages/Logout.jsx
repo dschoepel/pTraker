@@ -23,11 +23,6 @@ function Logout() {
     setImageContext(null);
   }, [authCtx, setImageContext]);
 
-  console.log("authCtx.alogout()");
-  // authCtx.aLogout();
-  // console.log("authCtx.alogout()");
-  console.log("Authservice.logout()");
-  console.log("setImageContext(null)");
   return (
     <Content style={contentStyle}>
       <Alert

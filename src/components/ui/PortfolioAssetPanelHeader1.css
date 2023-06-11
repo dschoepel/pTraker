@@ -1,0 +1,131 @@
+.rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+
+.rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.2em 0 0 0;
+  overflow: hidden;
+  list-style: none;
+  /* border: solid 3px white; */
+  border: none;
+  background: rgba(112, 128, 144, 0.2);
+  align-self: last baseline;
+  text-align: right;
+}
+
+.rtable--7cols > .rtable-cell {
+  width: 12.5%;
+  /* width: 16.66%; */
+}
+
+.rtable {
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
+
+.rtable-cell {
+  /* margin: -3px 0 0 -3px; */
+  background-color: var(--dk-darker-bg);
+  /* border-color: #e2e6e9; */
+}
+
+.rtable-cell--dark {
+  background-color: slategrey;
+  border-color: #5a6673;
+  color: white;
+}
+
+.rtable-cell--head {
+  color: var(--dk-gray-300);
+  font-weight: 500;
+  font-size: 1.5vw;
+}
+
+.rtable-cell--symbol {
+  color: var(--dk-gray-300);
+  font-weight: 500;
+  text-align: left;
+  font-size: 1.5vw;
+}
+
+.rtable-cell--name {
+  font-style: italic;
+  color: var(--dk-gray-600);
+  font-weight: 500;
+  font-size: 1.1vw;
+  text-align: left;
+}
+
+.rtable-cell-number {
+  color: var(--dk-gray-400);
+  font-size: 1.5vw;
+}
+
+.rtable-cell-icon {
+  text-align: right;
+}
+
+@media all and (max-width: 700px) {
+  .rtable--collapse {
+    display: block;
+  }
+
+  .rtable {
+    width: fit-content;
+  }
+  .rtable--collapse > .rtable-cell {
+    width: 100%;
+  }
+
+  .rtable--collapse > .rtable-cell--symbol,
+  .rtable--collapse > .rtable-cell--name {
+    text-align: right;
+  }
+
+  .rtable--collapse > .rtable-cell--foot {
+    margin-bottom: 1em;
+  }
+
+  .rtable-hide {
+    display: none;
+  }
+}
+
+@media all and (max-width: 767px) and (min-width: 577px) {
+  .rtable-hide-md {
+    display: none;
+  }
+}
+
+@media all and (max-width: 576px) {
+  .rtable--collapse {
+    display: block;
+  }
+
+  .rtable {
+    width: fit-content;
+  }
+  .rtable--collapse > .rtable-cell {
+    width: 100%;
+  }
+
+  .rtable--collapse > .rtable-cell--symbol,
+  .rtable--collapse > .rtable-cell--name {
+    text-align: right;
+  }
+
+  .rtable--collapse > .rtable-cell--foot {
+    margin-bottom: 1em;
+  }
+
+  .rtable-hide-sm {
+    display: none;
+  }
+}

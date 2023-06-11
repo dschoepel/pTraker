@@ -56,6 +56,10 @@ function PortfolioSummary({
       setShowDetail(true);
     } else {
       setShowDetail(false);
+      setNetWorth(0);
+      setGainLoss(0);
+      setTotalBasis(0);
+      setAssetSummary([]);
     }
     // setAssetSummary(portfolioAssets);
     // console.log("portfolioAssets: ", portfolioAssets);
@@ -105,7 +109,7 @@ function PortfolioSummary({
           className="portfolio-summary-card-heading"
           key={"heading"}
         >
-          <Col span={8}>Total Net Worth</Col>
+          <Col span={8}>Portfolio Net Worth</Col>
           <Col span={4}>Day's Gain</Col>
           <Col span={4}>Book Value</Col>
           <Col span={4}>Total Return</Col>
@@ -230,8 +234,8 @@ function PortfolioSummary({
               justify="space-around"
               className="portfolio-summary-card-empty-row"
             >
-              Your portfolio list is empty. Add one or more symbols to start
-              building your porfolio details.
+              Your portfolio asset list is empty. Add one or more symbols to
+              start defining your porfolio asset details.
             </Row>
             <Row justify="space-around">
               <Button type="primary" onClick={addSymbolClicked}>

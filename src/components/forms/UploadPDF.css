@@ -1,0 +1,11 @@
+.ant-upload-wrapper .ant-upload-drag p.ant-upload-drag-icon .anticon {
+  color: var(--dk-gray-300);
+}
+
+.ant-upload-wrapper .ant-upload-drag p.ant-upload-text {
+  color: var(--dk-gray-300);
+}
+
+.ant-upload-wrapper .ant-upload-drag p.ant-upload-hint {
+  color: var(--dk-gray-500);
+}

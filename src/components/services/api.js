@@ -54,7 +54,9 @@ instance.interceptors.response.use(
             },
           } = _error;
           console.log("intercept.res: ", status, message);
-
+          if (status === 403) {
+            console.log("Error 403 found");
+          }
           return Promise.reject(_error);
         }
       }

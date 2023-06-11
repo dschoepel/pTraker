@@ -1,4 +1,5 @@
 import api from "./api";
+import dayjs from "dayjs";
 
 const getUserPortfolios = () => {
   return api
@@ -12,7 +13,57 @@ const getUserPortfolios = () => {
       };
     })
     .catch((error) => {
+      console.log("Error found: ", error.response.status);
       console.log("Error caught getUserPortfolios: ", error);
+      return {
+        success: false,
+        statusCode: error.response?.status,
+        data: error.response.data,
+      };
+    });
+};
+
+const getDefaultPortfolio = () => {
+  return api
+    .get("/portfolio/getDefaultPortfolio")
+    .then((response) => {
+      console.log("getDefaultPortfolio response: ", response);
+      return {
+        success: true,
+        statusCode: 200,
+        data: response.data.defaultPortfolio,
+      };
+    })
+    .catch((error) => {
+      console.log("Error found: ", error.response.status);
+      console.log("Error caught getDefaultPortfolio: ", error);
+      return {
+        success: false,
+        statusCode: error.response.status,
+        data: error.response.data,
+      };
+    });
+};
+
+const getUserNetWorth = () => {
+  return api
+    .get("/portfolio/getUserNetWorth")
+    .then((response) => {
+      // console.log("getUserNetworth response: ", response);
+      return {
+        success: true,
+        statusCode: 200,
+        data: response.data.netWorthDetails,
+      };
+    })
+    .catch((error) => {
+      // console.log("Error found: ", error.response.status);
+      console.log("Error caught getUserPortfolios: ", error);
+      return {
+        success: false,
+        statusCode: error.response.status,
+        data: error.response.data,
+      };
     });
 };
 
@@ -125,11 +176,7 @@ const deletePortfolio = (portfolioRecord) => {
   return api
     .post("/portfolio/deletePortfolio", { portfolioId: portfolioRecord._id })
     .then((response) => {
-      console.log(
-        "Deleting portfolio",
-        portfolioRecord.portfolioName,
-        portfolioRecord._id
-      );
+      console.log("Deleting portfolio", portfolioRecord._id, response);
       return { success: true, statusCode: 201, data: response };
     })
     .catch((error) => {
@@ -152,14 +199,140 @@ const addAssetToPortfolio = (portfolioId, assetToAdd) => {
     });
 };
 
+const getAssetDetail = (assetId) => {
+  const url = `/portfolio/getAssetDetail?assetId=${assetId}`;
+  return api
+    .get(url)
+    .then((response) => {
+      console.log("getAssetDetail response: ", response);
+      return {
+        success: true,
+        statusCode: 200,
+        assetDetail: response.data.assetDetail,
+      };
+    })
+    .catch((error) => {
+      console.log(
+        `Error fetching asset detail for asset Id ${assetId} to Portfolio. Error ${error.toJSON()}`
+      );
+      return {
+        success: false,
+        statusCode: error.response.status,
+        assetDetail: error.message,
+      };
+    });
+};
+
+const removeAssetFromPortfolio = (portfolioId, assetId) => {
+  return api
+    .post("/portfolio/removePortfolioAsset", {
+      portfolioId: portfolioId,
+      assetId: assetId,
+    })
+    .then((response) => {
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log("Error removing asset from Portfolio", error);
+    });
+};
+
+const addLotToPortfolio = (portfolioId, assetId, lotDetail) => {
+  const { qty, acquiredDate, unitPrice } = lotDetail;
+  console.log(
+    "Adding lot to portfolio 1: ",
+    portfolioId,
+    assetId,
+    lotDetail.qty,
+    lotDetail.unitPrice,
+    dayjs(lotDetail.acquiredDate).toISOString()
+  );
+  return api
+    .post("/portfolio/addLot", {
+      lotDetail: {
+        portfolioId: portfolioId,
+        assetId: assetId,
+        lots: [
+          {
+            qty: qty,
+            acquiredDate: dayjs(acquiredDate).toISOString(),
+            unitPrice: unitPrice,
+          },
+        ],
+      },
+    })
+    .then((response) => {
+      console.log(
+        "Adding lot to portfolio 2: ",
+        portfolioId,
+        assetId,
+        lotDetail.qty,
+        lotDetail.unitPrice,
+        dayjs(lotDetail.acquiredDate).toISOString()
+      );
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log("Error adding lot to Portfolio", error);
+    });
+};
+
+const editLotInPortfolio = (lotId, lotDetail) => {
+  const { qty, acquiredDate, unitPrice } = lotDetail;
+  console.log(
+    "Updating lot in portfolio Step 1: ",
+    lotId,
+    lotDetail.qty,
+    lotDetail.unitPrice,
+    dayjs(lotDetail.acquiredDate).toISOString()
+  );
+  return api
+    .post("/portfolio/updateLot", {
+      lotId: lotId,
+      lot: {
+        qty: qty,
+        acquiredDate: dayjs(acquiredDate).toISOString(),
+        unitPrice: unitPrice,
+      },
+    })
+    .then((response) => {
+      console.log(
+        "Updating lot in portfolio Step 2: ",
+        lotId,
+        lotDetail.qty,
+        lotDetail.unitPrice,
+        dayjs(lotDetail.acquiredDate).toISOString()
+      );
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log("Error updating lot in Portfolio", error);
+    });
+};
+
+const deleteLotFromPortfolio = (lotId) => {
+  return api
+    .post("/portfolio/deleteLot", { lotId: lotId })
+    .then((response) => {
+      console.log(`Deleted lot ${lotId} from Portfolio`);
+      return { success: true, statusCode: 201, data: response };
+    })
+    .catch((error) => {
+      console.log(
+        "Somthing went wrong with deleting lot from portfolio: ",
+        error
+      );
+    });
+};
+
 // TODO  Add getHistory?symbol={symbol}
 const getHistory = (symbol) => {
-  console.log("starting getHistory with: ", symbol);
+  // console.log("starting getHistory with: ", symbol);
   const url = `/portfolio/getHistory?symbol=${symbol}`;
   return api
     .get(url)
     .then((response) => {
-      console.log("getHistory response: ", response);
+      // console.log("getHistory response: ", response);
       return {
         success: true,
         statusCode: 200,
@@ -170,6 +343,25 @@ const getHistory = (symbol) => {
     })
     .catch((error) => {
       console.log("Error caught getHistory: ", error);
+    });
+};
+
+// Get RSS News feeds (currently Yahoo finance and WSJ)
+const getRSSNewsFeeds = () => {
+  console.log("starting getRSSNewsFeeds");
+  const url = "/portfolio/getRSSNews";
+  return api
+    .get(url)
+    .then((response) => {
+      console.log("getRSSNews response: ", response);
+      return {
+        success: true,
+        statusCode: 200,
+        newsFeed: response.data.newsFeed,
+      };
+    })
+    .catch((error) => {
+      console.log("Error caught getRSSNews: ", error);
     });
 };
 
@@ -195,6 +387,8 @@ const sumPortfolio = async (portfolioAssetSummary) => {
       });
     }
   }
+
+  //TODO sort priced assets?
 
   return {
     totalNetWorth: totalNetWorth,
@@ -248,8 +442,26 @@ const handleListChanges = async (changeType, portfolioId, portfolioName) => {
       action = "navigate";
       toPortfolioId = portfolioId;
       break;
+    case "REMOVED_ASSET":
+      console.log("handling portfolio asset removal: ", portfolioId);
+      setLocalPortfolioId(portfolioId);
+      action = "navigate";
+      toPortfolioId = portfolioId;
+      break;
     case "EDIT_PORTFOLIO":
       console.log("handling portfolio edit: ", portfolioId);
+      break;
+    case "ADDED_LOT":
+      console.log("handling adding lot to portfolio: ", portfolioId);
+      action = "navigate";
+      break;
+    case "UPATED_LOT":
+      console.log("handling updating lot in portfolio: ", portfolioId);
+      action = "navigate";
+      break;
+    case "DELETED_LOT":
+      console.log("handling deleting a lot from portfolio: ", portfolioId);
+      action = "navigate";
       break;
     default:
       console.log("handling unknown portfolio change: ", portfolioId);
@@ -268,11 +480,18 @@ const setLocalPortfolioId = (portfolioId) => {
 
 const PortfolioService = {
   getUserPortfolios,
+  getDefaultPortfolio,
+  getUserNetWorth,
   getOnePortfolio,
   addUserPortfolio,
   editPortfolio,
   deletePortfolio,
   addAssetToPortfolio,
+  getAssetDetail,
+  removeAssetFromPortfolio,
+  addLotToPortfolio,
+  editLotInPortfolio,
+  deleteLotFromPortfolio,
   getQuote,
   getQuotes,
   getHistory,
@@ -281,6 +500,7 @@ const PortfolioService = {
   getLocalPortfolioId,
   setLocalPortfolioId,
   setDefaultPortfolio,
+  getRSSNewsFeeds,
 };
 
 export default PortfolioService;

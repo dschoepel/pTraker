@@ -1,0 +1,10 @@
+div.ant-collapse-item.asset-panel {
+  border-left: solid #4ca825;
+  border-radius: 0;
+  border-bottom: none;
+  /* background-color: var(--dk-gray-500); */
+}
+
+.asset-panel-detail {
+  color: var(--dk-gray-100);
+}

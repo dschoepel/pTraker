@@ -3,7 +3,7 @@ import { Layout, Col, Modal, Space } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 
 import TickerSearch from "../ui/TickerSearch";
-import TickerSearchResultTable from "../ui/TickerSearchResultTable";
+import NewTickerSearchResultTable from "../ui/TickerSearchResultTable";
 
 import "./TickerLookup.css";
 
@@ -45,7 +45,7 @@ function TickerLookup({
               setSearchText={setSearchText}
             />
             {tickerTableData.length > 0 ? (
-              <TickerSearchResultTable
+              <NewTickerSearchResultTable
                 tickerTableData={tickerTableData}
                 searchText={searchText}
                 setPortfolioChanged={setPortfolioChanged}

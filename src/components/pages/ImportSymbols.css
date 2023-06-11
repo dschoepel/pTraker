@@ -1,0 +1,11 @@
+div.ant-steps-item-title {
+  color: var(--dk-gray-300) !important;
+}
+
+.pt-import-steps-content {
+  color: var(--dk-gray-300);
+}
+
+.pt-import-steps {
+  width: 100%;
+}

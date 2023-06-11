@@ -42,15 +42,6 @@ const Login = () => {
         <LoginForm />
         <Link onClick={handleForgotPassword}>Forgot Password?</Link>
         {forgotpassword ? (
-          // <Alert
-          //   message="forgot password clicked"
-          //   type="info"
-          //   showIcon={true}
-          //   closable
-          //   afterClose={() => {
-          //     setForgotPassword(false);
-          //   }}
-          // ></Alert>
           <>
             <ResetPasswordForm />
           </>

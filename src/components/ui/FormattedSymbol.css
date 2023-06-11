@@ -1,0 +1,8 @@
+.symbol-title-style {
+  font-weight: normal;
+  margin-right: 5px;
+}
+.formatted-symbol-style {
+  font-weight: bold;
+  color: var(--dk-gray-600);
+}

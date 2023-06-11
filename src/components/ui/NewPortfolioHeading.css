@@ -1,0 +1,10 @@
+.portfolio-heading-row {
+  align-items: flex-end;
+  padding: 0 2em 1.5em 0;
+  background-color: var(--dk-darker-bg);
+}
+.portfolio-heading {
+  font-size: 300%;
+  color: var(--dk-gray-100);
+  font-weight: bold;
+}

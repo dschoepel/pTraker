@@ -19,3 +19,11 @@
 .ant-menu-item {
   font-size: large;
 }
+
+.ant-menu-item.ant-menu-item-active {
+  background-color: var(--dk-button-bg) !important;
+}
+
+li {
+  background-color: transparent !important;
+}

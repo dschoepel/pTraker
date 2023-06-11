@@ -20,7 +20,9 @@ function setScale(historyChart, baseline) {
     return current.price < previous.price ? current : previous;
   });
   minScale = foundMin.price - 0.01;
-
+  if (minScale > baseline) {
+    minScale = minScale - (minScale - baseline) * 1.5;
+  }
   return { maxScale: maxScale, minScale: minScale };
 }
 
@@ -34,14 +36,11 @@ const LineChart = ({ symbol }) => {
   useEffect(() => {
     PortfolioService.getHistory(symbol)
       .then((response) => {
-        console.log("Fetch history response: ", response);
         const { success, historyChart, baseline } = response;
         setData(historyChart);
         setBaseline(baseline);
-        console.log(baseline);
         setMaxScale(setScale(historyChart, baseline).maxScale);
         setMinScale(setScale(historyChart, baseline).minScale);
-        console.log("max min: ", maxScale, minScale);
         if (historyChart.length > 1) {
           setChangeDirection(
             historyChart[historyChart.length - 1].price > baseline ? 1 : 0
@@ -91,11 +90,10 @@ const LineChart = ({ symbol }) => {
     ],
   };
 
-  console.log("data ----> ", data);
   return (
     <Layout
       style={{
-        width: "7.5%",
+        width: "5.0rem",
         height: "1.5em",
         backgroundColor: "var(--bk-dark-bg)",
       }}

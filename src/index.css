@@ -10,25 +10,37 @@
   --dk-gray-700: #374151;
   --dk-gray-800: #1f2937;
   --dk-gray-900: #111827;
-  --dk-dark-bg: #313348;
+  --test: #374151;
   /* --dk-dark-bg: #90e0ef; */
   /* --dk-darker-bg: #2a2b3d; */
   --dk-darker-bg: #1e1f3b;
+  --dk-button-bg: #3b3871;
   --navbar-bg-color: #6f6486;
   /* --navbar-bg-color: #89845e; */
   --sidebar-bg-color: #0e0f26;
   /* --sidebar-bg-color: #03045e; */
   --logo-yellow-color: #ffc107;
   --pt-red-100: #ff4d4f;
-  --pt-green-100: #f6ffed;
-  --pt-green-200: #d9f7be;
-  --pt-green-300: #b7eb8f;
-  --pt-green-400: #95de64;
-  --pt-green-500: #73d13d;
-  --pt-green-600: #52c41a;
+  --pt-green-000: #c3e2b6;
+  --pt-green-100: #afd89e;
+  --pt-green-200: #9ccf86;
+  --pt-green-300: #88c56e;
+  --pt-green-400: #74bb56;
+  --pt-green-500: #60b13d;
+  --pt-green-600: #4ca825;
   --pt-green-700: #389e0d;
+  --pt-green-800: #328e0c;
+  --pt-green-900: #2d7e0a;
   --pt-primary-hover: #56527d;
-  --sidebar-width: 19em;
+  /* Wealth managemenet website colors */
+  --wf-background: #161338;
+  --wf-text-01: #eae4e8;
+  --wf-text-02: #BDC6F5
+  --wf-text-03: #230B59;
+  --wf-icons-01: #8295D9
+  --wf-text-04: #220b59;
+  --gold-01: #f0c17d;
+  --sidebar-width: 17rem;
 }
 
 * {

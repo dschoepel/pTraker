@@ -137,7 +137,7 @@ const LoginForm = () => {
         >
           <Input
             className="login-form-addon-icon"
-            addonBefore={<MailOutlined />}
+            addonBefore={<MailOutlined className="login-form-addon-icon" />}
             allowClear
             placeholder="Enter email address"
             ref={emailInput}
@@ -151,7 +151,7 @@ const LoginForm = () => {
         >
           <Input.Password
             className="login-form-addon-icon"
-            addonBefore={<LockOutlined />}
+            addonBefore={<LockOutlined className="login-form-addon-icon" />}
             placeholder="Enter password"
           />
         </Form.Item>

@@ -1,0 +1,18 @@
+div.ant-collapse-item.lot-panel {
+  border-left: solid #f0c17d;
+  border-radius: 0;
+  border-bottom: none;
+  /* background-color: var(--dk-gray-500); */
+}
+
+.lot-panel-detail {
+  color: var(--dk-gray-100);
+}
+
+.lot-list {
+  border-left: solid #f0c17d;
+}
+
+.lot-list-item {
+  margin-left: 1rem;
+}

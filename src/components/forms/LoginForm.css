@@ -3,6 +3,7 @@
 }
 
 .login-form-addon-icon {
-  background-color: var(--dk-gray-200);
-  border-radius: 8px;
+  background-color: var(--dk-dark-bg);
+  color: var(--dk-gray-300);
+  /* border-radius: 8px; */
 }

@@ -30,7 +30,7 @@ function SideBar({ collapsed, listChanged, setListChanged }) {
           setListChanged={setListChanged}
         />
       ) : null}
-      <SideMenu selectedKey={"1"} />
+      <SideMenu />
     </Sider>
   );
 }

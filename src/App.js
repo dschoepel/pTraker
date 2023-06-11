@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { ConfigProvider, Layout } from "antd";
@@ -10,6 +10,7 @@ import AuthService from "./components/services/auth.service";
 import AuthContext from "./components/store/auth.context";
 
 import TokenService from "./components/services/token.service";
+import { PortfolioChangeContext } from "./components/store/portfolioChange.context";
 
 import SideBar from "./components/ui/SideBar";
 import Heading from "./components/ui/Heading";
@@ -27,6 +28,14 @@ import PasswordReset from "./components/pages/PasswordReset";
 import TickerLookup from "./components/pages/TickerLookup";
 import CreatePortfolio from "./components/pages/CreatePortfolio";
 import UserDashboard from "./components/pages/UserDashboard";
+import NewUserDashboard from "./components/pages/NewUserDashboard";
+import NewUserDashboardHome from "./components/pages/NewUserDashboardHome";
+import SetHomePage from "./components/ui/SetHomePage";
+import BusinessNewsFeed from "./components/ui/BusinessNewsFeed";
+import BusinessNews from "./components/ui/BusinessNews";
+import ATemp from "./components/pages/ATemp";
+import ExpiredToken from "./components/pages/ExpiredToken";
+import ImportSymbols from "./components/pages/ImportSymbols";
 
 import "./App.css";
 import PortfolioService from "./components/services/portfolio.service";
@@ -39,6 +48,7 @@ const App = () => {
   const [imageContext, setImageContext] = useState(
     authCtx.isLoggedIn ? TokenService.getUserProfileImage : null
   );
+
   const [collapsed, setCollapsed] = useState(getIsCollapsed);
   const [listChanged, setListChanged] = useState({
     changed: false,
@@ -59,10 +69,11 @@ const App = () => {
     if (user) {
       authCtx.aLogin(user.accessToken);
       setImageContext(user.profileImage);
+      // navigate("/dashboard");
       // setCurrentUser(user);
       // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
-  }, [authCtx]);
+  }, [authCtx, navigate]);
 
   useEffect(() => {
     async function runEffect() {
@@ -78,6 +89,8 @@ const App = () => {
           console.log("Navigating to: ", response.to);
 
           navigate(`/dashboard/${response.to}`);
+        } else {
+          console.log("handle list change response not correct?", response);
         }
       }
     }
@@ -99,76 +112,70 @@ const App = () => {
             collapsed={collapsed}
           ></Heading>
 
-          <Layout className="site-layout">
-            <Routes>
-              {!authCtx.isLoggedIn ? (
-                <Route path="/" element={<PublicHome />} />
-              ) : null}
-              {/* {authCtx.isLoggedIn ? (
+          <PortfolioChangeContext.Provider
+            value={[listChanged, setListChanged]}
+          >
+            <Layout className="site-layout">
+              <Routes>
+                {!authCtx.isLoggedIn ? (
+                  <Route path="/public" element={<PublicHome />} />
+                ) : null}
+                <Route path="/register" element={<Register />} />
                 <Route
-                  path="/dashboard/"
-                  element={
-                    <UserDashboard
-                      listChanged={listChanged}
-                      setListChanged={setListChanged}
-                    />
-                  }
-                  // loader={async () => {
-                  //   const userPortfolios =
-                  //     await PortfolioService.getUserPortfolios();
-                  //   return userPortfolios.data;
-                  // }}
+                  path="/verifyRegistration"
+                  element={<VerifyRegistration />}
                 />
-              ) : null} */}
-              <Route path="/register" element={<Register />} />
-              <Route
-                path="/verifyRegistration"
-                element={<VerifyRegistration />}
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/logout" element={<Logout />} />
-              <Route
-                path="/emailReVerification"
-                element={<EmailReVerification />}
-              />
-              <Route
-                path="/emailVerification/:verificationToken"
-                element={<EmailVerification />}
-              />
-              <Route
-                path="/emailVerification"
-                element={<EmailVerification />}
-              />
-              <Route path="/tickerLookup" element={<TickerLookup />} />
-              <Route path="/passwordReset" element={<PasswordReset />} />
-              {authCtx.isLoggedIn && (
-                <Route path="/myProfile" element={<MyProfile />} />
-              )}
-              {authCtx.isLoggedIn && (
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/expiredLogin" element={<ExpiredToken />} />
                 <Route
-                  path="/dashboard"
-                  element={
-                    <UserDashboard
-                      listChanged={listChanged}
-                      setListChanged={setListChanged}
-                    />
-                  }
+                  path="/news"
+                  element={<BusinessNews fullscreen={true} />}
                 />
-              )}
-              {authCtx.isLoggedIn && (
+                <Route path="/upload" element={<ImportSymbols />} />
                 <Route
-                  path="/dashboard/:portfolioId"
-                  element={
-                    <UserDashboard
-                      listChanged={listChanged}
-                      setListChanged={setListChanged}
-                    />
-                  }
+                  path="/emailReVerification"
+                  element={<EmailReVerification />}
                 />
-              )}
-              <Route path="*" element={<PublicHome />} />
-            </Routes>
-          </Layout>
+                <Route
+                  path="/emailVerification/:verificationToken"
+                  element={<EmailVerification />}
+                />
+                <Route
+                  path="/emailVerification"
+                  element={<EmailVerification />}
+                />
+                <Route path="/tickerLookup" element={<TickerLookup />} />
+                <Route path="/passwordReset" element={<PasswordReset />} />
+                {authCtx.isLoggedIn && (
+                  <Route path="/myProfile" element={<MyProfile />} />
+                )}
+                {authCtx.isLoggedIn && (
+                  <Route
+                    path="/dashboard/:portfolioId"
+                    element={
+                      <NewUserDashboard
+                        listChanged={listChanged}
+                        setListChanged={setListChanged}
+                      />
+                    }
+                  />
+                )}
+                {authCtx.isLoggedIn && (
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <NewUserDashboardHome
+                        listChanged={listChanged}
+                        setListChanged={setListChanged}
+                      />
+                    }
+                  />
+                )}
+                <Route path="*" element={<SetHomePage />} />
+              </Routes>
+            </Layout>
+          </PortfolioChangeContext.Provider>
 
           <Footing />
         </Layout>

@@ -1,0 +1,17 @@
+.ant-modal-confirm-title,
+.ant-modal-confirm-content {
+  color: var(--dk-gray-300) !important;
+}
+
+.pt-symboltree-heading {
+  color: var(--dk-gray-500);
+  font-weight: bold;
+}
+
+.pt-symboltree-text {
+  color: var(--dk-gray-300);
+}
+
+ul.pt-symboltree-ul {
+  list-style-type: none;
+}

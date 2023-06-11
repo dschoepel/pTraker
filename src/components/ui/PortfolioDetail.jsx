@@ -3,11 +3,15 @@ import { Row, Col, Divider, Card } from "antd";
 import { HiArrowNarrowDown, HiArrowNarrowUp } from "react-icons/hi";
 
 import Color from "./Color";
-import "./PortfoliDetail.css";
+import "./PortfolioDetail.css";
 import { PortfolioContext } from "../store/portfolio.context";
 
 const { Green, Red, C } = Color;
 
+// The portfolio detail component is a card that displays the portfolio
+// asset summary and the portfolio lots.  The portfolio asset summary is
+// a summary of the portfolio lots.  The portfolio lots are the individual
+// lots that make up the portfolio asset summary.
 function PortfolioDetail({ portfolioDetail, portfolioAssetSummary }) {
   const [portfolioContext] = useContext(PortfolioContext);
   const [lots, setLots] = useState([]);
@@ -119,23 +123,10 @@ function PortfolioDetail({ portfolioDetail, portfolioAssetSummary }) {
 
   return (
     <>
-      {/* <Divider
-        type="horizontal"
-        orientation="left"
-        className="portfolio-detail-divider-horizontal"
-      >
-        {portfolioDetail.portfolioName}
-      </Divider> */}
       <Card bordered={false} className="portfolio-detail-card">
         {cardHeading}
         {assetRow}
       </Card>
-      {/* <Row justify={"space-betwen"}>
-        <Col span={4}>Symbol</Col>
-        <Col span={4}>Value</Col>
-        <Col span={4}>Basis</Col>
-        <Col span={4}>Qty</Col>
-      </Row> */}
     </>
   );
 }

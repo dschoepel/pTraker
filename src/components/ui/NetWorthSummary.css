@@ -1,0 +1,33 @@
+.networth-card {
+  width: 100%;
+}
+
+.ant-card.networth-card {
+  /* background-color: var(--dk-dark-bg); */
+  padding: 0 0.15rem;
+}
+
+div.ant-typography {
+  margin: 0;
+}
+
+.networth-card-heading {
+  font-weight: 600;
+}
+
+div.ant-typography.networth-card-heading {
+  /* font-weight: 600; */
+  font-size: 1.25rem;
+  color: var(--dk-gray-400);
+  /* background-color: var(--dk-dark-bg); */
+  margin-bottom: 0;
+  text-align: right;
+}
+.networth-card-heading .ant-col {
+  font-size: 1.1rem;
+}
+
+.ant-card-head {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

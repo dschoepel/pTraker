@@ -1,0 +1,31 @@
+.table-ticker-search {
+  font: normal;
+  max-width: 100%;
+}
+
+.table-ticker-green {
+  color: var(--pt-green-600);
+  font-weight: 600;
+}
+
+.symbol {
+  color: var(--dk-gray-100);
+}
+.company,
+.exchange {
+  color: var(--dk-gray-400);
+}
+.symbol {
+  color: var(--dk-gray-100);
+}
+
+.table-ticker-green .symbol,
+.table-ticker-green .company,
+.table-ticker-green .exchange {
+  color: var(--pt-green-600);
+}
+
+.ant-table-row:hover > td,
+td.ant-table-cell-row-hover {
+  background: var(--pt-primary-hover) !important;
+}

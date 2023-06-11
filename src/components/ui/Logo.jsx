@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Tooltip } from "antd";
 
 import "./Logo.css";
 
@@ -10,21 +11,23 @@ function Logo(props) {
   console.log(process.env.REACT_APP_PTRACKER_APP_BASE_URL, ptrackerLogo);
   const { collapsed } = props;
   return (
-    <Link to="/">
-      <div className="pt-logo">
-        <img
-          className="pt-img"
-          src={ptrackerLogo}
-          alt="portfolio Traker Logo"
-        />
-        {!collapsed ? (
-          <>
-            <div className="pt-text1">portfolio</div>
-            <div className="pt-text2">Traker</div>
-          </>
-        ) : null}
-      </div>
-    </Link>
+    <Tooltip title="Dashboard">
+      <Link to="/">
+        <div className="pt-logo">
+          <img
+            className="pt-img"
+            src={ptrackerLogo}
+            alt="portfolio Traker Logo"
+          />
+          {!collapsed ? (
+            <>
+              <div className="pt-text1">portfolio</div>
+              <div className="pt-text2">Traker</div>
+            </>
+          ) : null}
+        </div>
+      </Link>
+    </Tooltip>
   );
 }
 

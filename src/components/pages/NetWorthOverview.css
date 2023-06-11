@@ -1,0 +1,97 @@
+.user-networth-card {
+  /* */
+  /* width: 85%; */
+}
+
+div.ant-typography {
+  margin: 0;
+}
+
+/* .user-networth-card-detail .button-add-symbol {
+  width: 100%;
+  color: var(--dk-gray-100);
+} */
+
+/* .user-networth-card-empty {
+  width: 100%;
+  color: var(--dk-gray-100);
+  font-size: large;
+} */
+
+/* .user-networth-card-empty-row {
+  padding: 1rem 0;
+} */
+
+.user-networth-card-heading {
+  font-weight: 600;
+  /* font-size: medium; */
+  /* color: var(--dk-gray-400); */
+  /* background-color: var(--dk-dark-bg); */
+  /* flex-wrap: wrap; */
+}
+
+div.ant-typography.user-networth-card-heading {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--dk-gray-400);
+  background-color: var(--dk-dark-bg);
+  margin-bottom: 0;
+  text-align: right;
+}
+/* .user-networth-card-heading .ant-col {
+  font-size: 1.1rem;
+} */
+
+.user-networth-card-row {
+  /* font-weight: 600; */
+  color: var(--dk-gray-300);
+  background-color: var(--dk-dark-bg);
+  align-items: center;
+}
+
+.user-networth-card-divider {
+  /* font-weight: 600; */
+  color: var(--dk-gray-100);
+  background-color: var(--dk-darker-bg);
+}
+
+div.ant-typography.user-networth-card-net-worth {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--dk-gray-300);
+  text-align: right;
+}
+div.ant-typography.user-networth-card-color {
+  font-size: 1.25rem;
+  font-weight: normal;
+  text-align: right;
+  /* color: var(--dk-gray-300); */
+}
+.user-networth-bookvalue {
+  font-size: 1.2rem;
+  color: var(--dk-gray-300);
+  text-align: right;
+  /* font-weight: bold; */
+}
+
+.ant-card.user-networth-card {
+  background-color: var(--dk-dark-bg);
+  padding: 0 1em;
+}
+
+/* .user-networth-chart {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 46rem;
+} */
+
+/* .user-networth-chart-pie {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 28rem;
+} */
+
+div.ant-card-head-title {
+  color: var(--dk-gray-300);
+  font-size: 2rem;
+}

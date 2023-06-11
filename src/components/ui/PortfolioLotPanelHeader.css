@@ -1,0 +1,94 @@
+.ltable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0em 0;
+  padding: 0;
+  width: 50%;
+  border-left: solid #f0c17d;
+}
+
+.ltable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.2em 0 0 0;
+  overflow: hidden;
+  list-style: none;
+  /* border: solid 3px white; */
+  border: none;
+  background: rgba(112, 128, 144, 0.2);
+  align-self: last baseline;
+  text-align: right;
+}
+
+.ltable--5cols > .ltable-cell {
+  width: 20%;
+  /* width: 16.66%; */
+}
+
+.ltable {
+  position: relative;
+  top: 3px;
+  left: 0px;
+}
+
+.ltable-cell {
+  /* margin: -3px 0 0 -3px; */
+  background-color: var(--dk-darker-bg);
+  /* border-color: #e2e6e9; */
+}
+
+.ltable-cell--dark {
+  background-color: slategrey;
+  border-color: #5a6673;
+  color: white;
+}
+
+.ltable-cell--head {
+  color: var(--dk-gray-300);
+  font-weight: 500;
+}
+
+.ltable-cell--symbol {
+  color: var(--dk-gray-300);
+  font-weight: 500;
+  text-align: left;
+}
+
+.ltable-cell--name {
+  font-style: italic;
+  color: var(--dk-gray-600);
+  font-weight: 500;
+  font-size: smaller;
+  text-align: left;
+}
+
+.ltable-cell-number {
+  color: var(--dk-gray-400);
+}
+
+.ltable-cell-icon {
+  text-align: right;
+}
+
+@media all and (max-width: 700px) {
+  .ltable--collapse {
+    display: block;
+  }
+
+  .ltable {
+    width: fit-content;
+  }
+  .ltable--collapse > .ltable-cell {
+    width: 100%;
+  }
+
+  .ltable--collapse > .ltable-cell--symbol,
+  .ltable--collapse > .ltable-cell--name {
+    text-align: right;
+  }
+
+  .ltable--collapse > .ltable-cell--foot {
+    margin-bottom: 1em;
+  }
+}

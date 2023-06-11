@@ -1,6 +1,6 @@
 .ant-modal .ant-modal-content,
 .ant-modal-header .ant-modal-title {
-  background-color: var(--dk-dark-bg);
+  background-color: var(--dk-darker-bg);
 }
 
 .ant-modal-header .ant-modal-title {

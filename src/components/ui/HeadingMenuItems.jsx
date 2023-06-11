@@ -11,7 +11,7 @@ import {
   LogoutOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import { Avatar } from "antd";
+import { Avatar, Tooltip } from "antd";
 
 import { HiUserAdd } from "react-icons/hi";
 
@@ -25,6 +25,7 @@ function HeadingMenuItems() {
       ? BASE_URL + "/images/" + imageContext
       : BASE_URL + "/images/defaultperson.png"
   );
+  const [userName] = useState(TokenService.getUserName);
 
   useEffect(() => {
     const image = BASE_URL + "/images/" + imageContext;
@@ -76,22 +77,24 @@ function HeadingMenuItems() {
     {
       key: "Submenu",
       icon: (
-        <Avatar
-          style={{
-            marginTop: "2rem",
-            boxShadow: "0 3px 10px rgb(0 0 0 / 0.5)",
-          }}
-          size={{
-            xs: 24,
-            sm: 32,
-            md: 40,
-            lg: 48,
-            xl: 56,
-            xxl: 64,
-          }}
-          shape="square"
-          src={avatarImage}
-        />
+        <Tooltip placement="left" title={userName}>
+          <Avatar
+            style={{
+              marginTop: "2rem",
+              boxShadow: "0 3px 10px rgb(0 0 0 / 0.5)",
+            }}
+            size={{
+              xs: 24,
+              sm: 32,
+              md: 40,
+              lg: 48,
+              xl: 56,
+              xxl: 64,
+            }}
+            shape="square"
+            src={avatarImage}
+          />
+        </Tooltip>
       ),
       children: [
         {

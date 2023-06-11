@@ -15,10 +15,10 @@ function EditPortfolio({
   setPortfolioChanged,
 }) {
   const [portfolioName, setPortfolioName] = useState(
-    record.portfolioDetail.portfolioName.trim()
+    record?.portfolioName.trim()
   );
   const [portfolioDescription, setPortfolioDescription] = useState(
-    record.portfolioDetail.portfolioDescription.trim()
+    record?.portfolioDescription.trim()
   );
   // const [nameChanged, setNameChanged] = useState(false);
   // const [descriptionChanged, setDescriptionChanged] = useState(false);
@@ -59,7 +59,7 @@ function EditPortfolio({
     PortfolioService.editPortfolio(
       portfolioName,
       portfolioDescription,
-      record.portfolioDetail._id
+      record.portfolioId
     )
       .then(
         (response) => {
@@ -74,7 +74,7 @@ function EditPortfolio({
             setPortfolioChanged({
               changed: true,
               changeType: "EDIT_PORTFOLIO",
-              portfolioId: record.portfolioDetail._id,
+              portfolioId: record.portfolioId,
             });
           }
           setEMessage(
@@ -103,9 +103,7 @@ function EditPortfolio({
     let descChgd = false;
 
     if (values.portfolioName) {
-      if (
-        values.portfolioName !== record.portfolioDetail.portfolioName.trim()
-      ) {
+      if (values.portfolioName !== record.portfolioName.trim()) {
         nameChgd = true;
         setPortfolioName(values.portfolioName.trim());
       } else {
@@ -114,10 +112,7 @@ function EditPortfolio({
     }
 
     if (values.portfolioDescription) {
-      if (
-        values.portfolioDescription !==
-        record.portfolioDetail.portfolioDescription.trim()
-      ) {
+      if (values.portfolioDescription !== record.portfolioDescription.trim()) {
         descChgd = true;
         setPortfolioDescription(values.portfolioDescription.trim());
       } else {

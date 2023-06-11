@@ -1,21 +1,27 @@
 import React from "react";
+import { App } from "antd";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
 
 import { AuthContextProvider } from "./components/store/auth.context";
 import "./index.css";
-import App from "./App";
+import MyApp from "./App";
 import { ConfigProvider } from "antd";
 // import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+TimeAgo.addDefaultLocale(en);
 root.render(
   <AuthContextProvider>
     <BrowserRouter>
       <ConfigProvider
-        theme={{ token: { colorPrimary: "#3B3871", colorInfo: "#7c77d1" } }}
+        theme={{ token: { colorPrimary: "#161338", colorInfo: "#7c77d1" } }}
       >
-        <App />
+        <App>
+          <MyApp />
+        </App>
       </ConfigProvider>
     </BrowserRouter>
   </AuthContextProvider>

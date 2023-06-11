@@ -1,0 +1,31 @@
+.news-feed {
+  background-color: var(--dk-darker-bg);
+  max-width: 45rem;
+  margin: 1.5rem;
+}
+.news-feed-full {
+  background-color: var(--dk-darker-bg);
+  /* max-width: 45rem; */
+  margin: 1.5rem;
+}
+
+.news-feed-list {
+  color: var(--dk-gray-300);
+  font-size: large;
+  font-weight: bold;
+  background-color: var(--dk-gray-500);
+}
+
+a.news-feed-item-url {
+  font-size: smaller;
+}
+
+span.news-feed-item-text,
+div.ant-typography.ant-typography-ellipsis.news-feed-item-text {
+  font-size: smaller;
+  color: var(--dk-gray-800);
+}
+
+.news-feed-item {
+  font-weight: normal;
+}

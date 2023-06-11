@@ -1,0 +1,31 @@
+.networth-title {
+  font-size: 2rem;
+  color: var(--dk-gray-400);
+  margin: 0 1rem 0 0;
+}
+
+.networth-title.number {
+  color: var(--dk-gray-100);
+  margin: 0 1rem 0 0;
+}
+.networth-title.change {
+  font-size: 1.7rem;
+  color: var(--dk-gray-400);
+  margin: 0 0 0.2rem 0;
+}
+
+.networth-title.small {
+  font-size: 1.25rem;
+  color: var(--dk-gray-400);
+  margin: 0 1rem 0 0;
+}
+
+.networth-title.number.small {
+  color: var(--dk-gray-100);
+  margin: 0 1rem 0 0;
+}
+.networth-title.change.small {
+  font-size: 1.1rem;
+  color: var(--dk-gray-400);
+  margin: 0 0 0.2rem 0;
+}
