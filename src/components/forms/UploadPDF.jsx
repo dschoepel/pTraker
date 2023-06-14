@@ -4,6 +4,7 @@ import { FilePdfOutlined } from "@ant-design/icons";
 import Spinner from "../ui/Spinner";
 
 import "./UploadPDF.css";
+import { set } from "lodash";
 
 const { Dragger } = Upload;
 
@@ -46,15 +47,17 @@ function UploadPDF({ setCurrent, setPdfDetails, setPdfFileName }) {
         return isPDF || Upload.LIST_IGNORE;
       }
     },
-    action: "http://192.168.10.156:8005/api/v1/file/pdf",
+    // action: "http://192.168.10.156:8005/api/v1/file/pdf",
+    action: "https://pae.ptraker.com/api/v1/file/pdf",
+    // action: "http://192.168.10.42:8005/api/v1/file/pdf",
     onChange(info) {
       const { status } = info.file;
       if (status !== "removed") {
         setIsLoading(true);
-      }
+      } else {setIsLoading(false);}
 
       if (status !== "uploading") {
-        console.log("Error flag: ", info.file.response.errorFlag);
+        console.log("Error flag: ", info.file.response?.errorFlag);
       } else {
         console.log("uploading ", info.file.percent);
       }
