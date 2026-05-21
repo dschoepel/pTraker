@@ -1,0 +1,14 @@
+# Nested repos — managed independently
+ptraker-api/
+ptraker-client/
+
+# Secrets — never commit real env files
+deploy/.env
+deploy/supabase/.env
+
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.pyc
