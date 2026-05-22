@@ -6,6 +6,7 @@ then push tagged releases to kick off the GitHub Actions builds.
 ## Before you start
 
 Determine which repos have changes to release:
+
 - `ptraker-api` (`E:\ptraker\ptraker-api`) — backend changes
 - `ptraker-client` (`E:\ptraker\ptraker-client`) — frontend changes
 - Both — full release (most common)
@@ -20,6 +21,7 @@ If a repo has no meaningful changes since its last tag, skip it.
 ### 1. Review accumulated changes
 
 For each repo being released, run:
+
 ```bash
 git -C E:\ptraker\ptraker-api log --oneline $(git -C E:\ptraker\ptraker-api describe --tags --abbrev=0)..HEAD
 git -C E:\ptraker\ptraker-client log --oneline $(git -C E:\ptraker\ptraker-client describe --tags --abbrev=0)..HEAD
@@ -30,12 +32,14 @@ Summarize what changed in each repo so the version bump and changelog are accura
 ### 2. Determine the next version
 
 Check current versions:
+
 ```bash
 node -p "require('./ptraker-api/package.json').version"
 node -p "require('./ptraker-client/package.json').version"
 ```
 
 Both repos use the same version number (kept in sync). Determine the bump:
+
 - **Patch** (x.y.Z) — bug fixes, dependency updates, minor tweaks
 - **Minor** (x.Y.0) — new features, non-breaking additions
 - **Major** (X.0.0) — breaking changes, major rewrites
@@ -43,6 +47,7 @@ Both repos use the same version number (kept in sync). Determine the bump:
 ### 3. Client build check
 
 If releasing ptraker-client, verify the production build succeeds:
+
 ```bash
 cd E:\ptraker\ptraker-client && npm run build
 ```
@@ -55,6 +60,7 @@ Based on what changed, write a specific test plan for the user to run against
 the local dev environment (`http://localhost:5173` for client, `http://localhost:5000` for API).
 
 The plan must be specific to the changes — not a generic smoke test. Examples:
+
 - New UI feature: list exact pages, buttons, and interactions to exercise
 - API change: specific endpoints and request shapes to verify
 - Bug fix: reproduce the original bug and confirm it no longer occurs
@@ -74,6 +80,7 @@ the user explicitly says tests passed.
 For each repo being released:
 
 **CHANGELOG.md** — add a new section at the top (below the heading):
+
 ```markdown
 ## [X.Y.Z] — YYYY-MM-DD
 
@@ -107,6 +114,7 @@ Keep both repos on the same version number.
 ### 7. Commit
 
 For each repo being released, stage all modified files and commit:
+
 ```
 git -C E:\ptraker\ptraker-api add -A
 git -C E:\ptraker\ptraker-api commit -m "chore: release v X.Y.Z"
@@ -118,6 +126,7 @@ git -C E:\ptraker\ptraker-client commit -m "chore: release v X.Y.Z"
 ### 8. Tag and push
 
 For each repo being released:
+
 ```bash
 git -C E:\ptraker\ptraker-api tag vX.Y.Z
 git -C E:\ptraker\ptraker-api push origin main --tags
@@ -132,6 +141,7 @@ pushes it to GHCR, then SSHes to Jupiter to restart the container.
 ### 9. Monitor the build
 
 Check the Actions tab in each repo:
+
 - https://github.com/dschoepel/ptraker-api/actions
 - https://github.com/dschoepel/ptraker-client/actions
 
@@ -142,19 +152,23 @@ If a workflow fails, check the logs before proceeding.
 
 After both builds complete, SSH to Jupiter and confirm containers are running
 the new image:
+
 ```bash
 ssh -p 22791 dschoepel@142.202.190.9
 docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}" | grep ptraker
 ```
 
 Then smoke test via browser:
+
 - https://ptraker.com — React app loads, login works
 - https://api.ptraker.com/health — returns `{"status":"ok",...}`
 - https://supabase.ptraker.com — returns HTTP 401 (Kong is up)
 
 If the API was updated, also verify:
+
 - Dashboard loads with portfolio data
 - Prices refresh on demand
+- 
 
 If the client was updated, also verify the specific features that changed.
 
