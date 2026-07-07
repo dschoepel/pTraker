@@ -1,17 +1,27 @@
-# =============================================================================
-# ptraker — Application Stack (PRODUCTION — Jupiter VPS)
-# =============================================================================
-# Deploy to: /data/ptraker/docker-compose.yml
-# Secrets:   /data/ptraker/.env  (copy from .env.example, fill in values)
-#
-# Both containers join proxy_net — no port bindings.
-# Swag reaches ptraker-api:5000 and ptraker-client:80 by container name.
-#
-# Start:   cd /data/ptraker && docker compose up -d
-# Update:  docker compose pull && docker compose up -d
-# =============================================================================
-
+---
 name: ptraker
+
+# =============================================================================
+# ptraker — Application Stack (PRODUCTION — Jupiter R640)
+# https://ptraker.com
+#
+# Depends on supabase-ptraker stack running separately at /data/supabase-ptraker/
+#
+# Changes from Jupiter VPS version:
+#   - Removed proxy_net — added port mappings for Earth Nginx
+#   - api and client now on their own isolated network
+#   - api reaches Supabase Kong via ptraker-supabase network (shared with supabase-ptraker stack)
+#   - SUPABASE_URL updated to use shared network instead of proxy_net container name
+#
+# Network setup:
+#   The supabase-ptraker stack must declare 'ptraker-supabase' as external,
+#   and this stack joins the same network so ptraker-api can reach Kong.
+#   See supabase-ptraker/docker-compose.yml for the matching network declaration.
+#
+# Start order:
+#   1. cd /data/supabase-ptraker && docker compose up -d
+#   2. cd /data/ptraker && docker compose up -d
+# =============================================================================
 
 services:
 
@@ -19,22 +29,29 @@ services:
     image: ghcr.io/dschoepel/ptraker-api:latest
     container_name: ptraker-api
     restart: unless-stopped
-    env_file: .env
+    env_file: /data/ptraker/.env
     environment:
       NODE_ENV: production
       PORT: "5000"
       TZ: America/Chicago
       CLIENT_URL: https://ptraker.com
+    ports:
+      - 5000:5000
     networks:
-      - proxy_net
+      - ptraker-internal
+      - ptraker-supabase   # shared with supabase-ptraker stack
 
   client:
     image: ghcr.io/dschoepel/ptraker-client:latest
     container_name: ptraker-client
     restart: unless-stopped
+    ports:
+      - 5001:80
     networks:
-      - proxy_net
+      - ptraker-internal
 
 networks:
-  proxy_net:
-    external: true
+  ptraker-internal:
+    driver: bridge
+  ptraker-supabase:
+    external: true   # created by supabase-ptraker stack
