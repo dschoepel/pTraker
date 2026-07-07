@@ -38,11 +38,11 @@ Each repo has its own git history, branches, and GitHub Actions CI/CD.
 - **Client**: React 19 / Vite 6 / Ant Design v6 / React Router v7 / Recharts
 - **Auth**: Supabase GoTrue (self-hosted) — email via nodemailer (GoTrue v2.186 bug workaround)
 - **Dev DB**: Supabase on Mercury (10.0.10.60:8100)
-- **Prod target**: Jupiter VPS (142.202.190.9) at ptraker.com — Docker/Portainer/Swag
+- **Prod target**: jupiter-r640 (10.0.10.50, LAN) at ptraker.com — Docker/Dockhand; reverse-proxied by nginx on Earth
 
 ## Current Status
 
-**Production deployment complete** — ptraker.com is live on Jupiter VPS (v1.0.0, 2026-05-21).
+**Production deployment complete** — ptraker.com is live on jupiter-r640 (v1.8.0, 2026-07-07).
 Fully functional: auth, dashboard, accounts, import (LPL CSV/QFX + CFCU OFX + manual),
 watchlist, admin, profile, portfolio sharing, analytics charts.
 
@@ -57,7 +57,7 @@ watchlist, admin, profile, portfolio sharing, analytics charts.
 | 5 | ptraker-api Dockerfile + .dockerignore | ✅ Done |
 | 6 | ptraker-client Dockerfile + nginx.conf | ✅ Done |
 | 7 | deploy/docker-compose.yml (ptraker stack) | ✅ Done |
-| 8 | GitHub Actions CI/CD workflows + versioning + deploy skill | ✅ Done |
+| 8 | GitHub Actions CI/CD workflows + versioning + deploy skill | ✅ Done (build/push only — Dockhand handles deploy) |
 | 9 | schema_additions.sql | ✅ Done |
 | 10 | First deployment + smoke test | ✅ Done |
 
@@ -76,9 +76,9 @@ watchlist, admin, profile, portfolio sharing, analytics charts.
 - To verify cert SANs: `docker exec swag openssl x509 -in /config/etc/letsencrypt/live/theschoepels.com/fullchain.pem -noout -text | grep -A2 "Subject Alternative"`
 
 ### Supabase Notes (Step 4)
-- Stack deployed at `/data/supabase-ptraker/` on Jupiter
-- Studio: SSH tunnel only — `ssh -p 22791 -L 3002:localhost:3002 dschoepel@142.202.190.9` → http://localhost:3002 (no additional login — SSH is the auth)
-- Kong container: `ptraker-supabase-kong` on both `supabase-ptraker_default` and `proxy_net`
+- Stack deployed at `/data/supabase-ptraker/` on jupiter-r640
+- Studio: SSH tunnel only — `ssh -p 22791 -L 3002:localhost:3002 dschoepel@10.0.10.50` → http://localhost:3002 (no additional login — SSH is the auth)
+- Kong container: `ptraker-supabase-kong` on `supabase-ptraker_default` and `ptraker-supabase` networks (no proxy_net)
 - `VAULT_ENC_KEY` must be exactly 32 bytes — use `secrets.token_hex(16)` not `token_urlsafe(32)` (43 chars breaks AES-256-GCM)
 - `docker compose restart` does NOT pick up `.env` changes — use `docker compose up -d --force-recreate <service>`
 - Schema: run `schema.sql` then `schema_additions.sql` in Studio SQL Editor (one-time)
@@ -94,7 +94,15 @@ watchlist, admin, profile, portfolio sharing, analytics charts.
 - `generate-secrets.py` produces valid 3-part JWTs; truncation happens during copy-paste from terminal to `.env` file — always verify with `grep KEY .env | cut -d= -f2 | tr -cd '.' | wc -c` (must be 2)
 
 ### DNS Notes (Step 1)
-- `ptraker.com` → 142.202.190.9, TTL 600
-- `*.ptraker.com` wildcard A record → 142.202.190.9 (covers all future subdomains)
+- `ptraker.com` and `*.ptraker.com` point to Earth (the nginx reverse proxy host); Earth forwards to jupiter-r640 (10.0.10.50) internally
 - CAA records on ptraker.com, api.ptraker.com, supabase.ptraker.com restricting issuance to letsencrypt.org only
 - DNS provider: DYNU
+
+### jupiter-r640 Host Notes
+- LAN address: 10.0.10.50, SSH port 22791, user dschoepel
+- No Swag — TLS termination and reverse proxy handled by nginx on Earth
+- nginx on Earth proxies: `ptraker.com` → `10.0.10.50:5001`, `api.ptraker.com` → `10.0.10.50:5000`, `supabase.ptraker.com` → `10.0.10.50:8100`
+- Compose files (local source of truth): `e:\schoepels-services\jupiter-r640\ptraker\` and `e:\schoepels-services\jupiter-r640\supabase-ptraker\`
+- Compose files on server: `/data/ptraker/` and `/data/supabase-ptraker/`
+- CI/CD builds image and pushes to GHCR; Dockhand detects the new image and notifies — no SSH deploy step
+- ptraker-api reaches Kong via the `ptraker-supabase` Docker network (shared between both stacks)
