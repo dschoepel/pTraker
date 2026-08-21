@@ -34,7 +34,7 @@ Each repo has its own git history, branches, and GitHub Actions CI/CD.
 
 ## Stack Summary
 
-- **API**: Node.js 23 / Express 4 / Supabase PostgreSQL / yahoo-finance2 v3
+- **API**: Node.js 23 / Express 4 / Supabase PostgreSQL / yahoo-finance2 v4
 - **Client**: React 19 / Vite 6 / Ant Design v6 / React Router v7 / Recharts
 - **Auth**: Supabase GoTrue (self-hosted) — email via nodemailer (GoTrue v2.186 bug workaround)
 - **Dev DB**: Supabase on Mercury (10.0.10.60:8100)
