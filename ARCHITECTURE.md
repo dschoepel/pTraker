@@ -2,8 +2,8 @@
 
 ## Overview
 
-Personal investment portfolio tracker for Dave Schoepel.
-Tracks $XM across 12 accounts at LPL Financial, Community First CU, and Associated Bank.
+Personal investment portfolio tracker for holdings across brokerage, retirement,
+and bank accounts.
 
 ## Repositories
 
@@ -28,7 +28,7 @@ Tracks $XM across 12 accounts at LPL Financial, Community First CU, and Associat
 └──────────────────┬──────────────────────────────┘
                    │ Supabase JS v2
 ┌──────────────────▼──────────────────────────────┐
-│  Supabase (self-hosted, Mercury 10.0.10.60)      │
+│  Supabase (self-hosted)                          │
 │  Kong: 8100  │  Postgres: 5434  │  Studio: 3002  │
 └─────────────────────────────────────────────────┘
 ```
@@ -133,7 +133,7 @@ use `admin.auth.generateLink()` + nodemailer:
 
 ```javascript
 const { data } = await admin.auth.generateLink({ type: 'invite', email, options });
-const link = data.properties.action_link.replace(/^https:\/\/10\.0\.10\.60\//, 'http://10.0.10.60:8100/');
+const link = toPublicLink(data.properties.action_link); // origin → SUPABASE_PUBLIC_URL
 // Send link via nodemailer
 ```
 
@@ -171,7 +171,7 @@ File/Manual Input
 
 | ID         | Source          | Multi-Account | Format                        |
 | ---------- | --------------- | ------------- | ----------------------------- |
-| `lpl_csv`  | LPL Financial   | ✅            | CSV with quoted newlines      |
+| `lpl_csv`  | LPL Financial   | ✅            | CSV, columns mapped by header |
 | `ofx_qfx`  | Any institution | ✅            | OFX SGML — investment + bank  |
 | `cfcu_csv` | CFCU            | ❌            | Transaction CSV, uses balance |
 | `manual`   | UI form         | ❌            | Cash balance or market value  |
@@ -256,10 +256,13 @@ Viewers see shared portfolios as read-only tabs on Dashboard.
 
 ## Price Refresh
 
-- Scheduled: weekdays 4pm CT (node-cron `0 16 * * 1-5`)
-- Manual: Refresh Prices button on dashboard (admin/user only)
+- Nightly: weekdays 5pm CT (`PRICE_REFRESH_CRON`, default `0 17 * * 1-5`) — full refresh + daily snapshot
+- Intraday: hourly 9:30am–3:30pm ET (`INTRADAY_PRICE_REFRESH_CRON`, default `30 9-15 * * 1-5`) — refresh only
+- Tickers refreshed: positions ∪ watchlist
+- Manual: Refresh Prices button on Dashboard and Watchlist (admin/user only)
 - After import: automatic for all imported tickers
 - CASH always $1.00 — never fetched from Yahoo
+- Manually priced tickers (`price_cache.fetch_source = 'manual'`, e.g. private stock) are skipped — entered price preserved
 
 ---
 
@@ -267,7 +270,7 @@ Viewers see shared portfolios as read-only tabs on Dashboard.
 
 Admin users can configure per-channel notification settings:
 
-- **Ntfy** (push): `https://ntfy.schoepels.com`, topic `ptraker-alerts`
+- **Ntfy** (push): configurable server URL + topic (e.g. `ptraker-alerts`)
 - **Email**: SMTP via nodemailer
 
 ---
@@ -281,18 +284,18 @@ Admin users can configure per-channel notification settings:
 5. **Ant Design v6** — `Space direction` → `orientation`, `Divider type` → `orientation`.
 6. **useEffect + setState** — always use async IIFE with cancelled flag, never call setState synchronously in effect body.
 7. **Route order** — specific routes before parameterized: `/discoverable-users` before `/:ownerId`.
-8. **Multi-account matching** — last-4 digits of account number. CFCU savings account `8400` won't export if no activity in date range — use manual entry.
+8. **Multi-account matching** — last-4 digits of account number. Bank accounts with no activity in the export's date range may be missing from OFX files — use manual entry.
 
 ---
 
 ## Development Workflow
 
-### Import cadence for LPL accounts
+### Typical import cadence
 
-1. **Quarterly**: Import LPL CSV (all accounts) → writes shares + cost basis
-2. **Monthly**: Import LPL QFX (all accounts) → updates shares, preserves cost basis
-3. **As needed**: Import CFCU OFX → checking ($7845) + money market ($8405) balances
-4. **Manual**: NJSD 403(b) and 457 plans, CFCU regular savings ($8400)
+1. **Quarterly**: Import brokerage CSV (all accounts) → writes shares + cost basis
+2. **Monthly**: Import QFX (all accounts) → updates shares, preserves cost basis
+3. **As needed**: Import bank OFX → checking/savings balances
+4. **Manual**: retirement plans without file exports, private holdings (manual price)
 
 ### Running locally
 

@@ -12,3 +12,6 @@ deploy/supabase/.env
 # Python
 __pycache__/
 *.pyc
+
+# Private Claude Code notes (environment details — never commit)
+CLAUDE.local.md

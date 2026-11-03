@@ -136,51 +136,38 @@ git -C E:\ptraker\ptraker-client push origin main --tags
 ```
 
 This triggers the GitHub Actions workflow that builds the Docker image and
-pushes it to GHCR, then SSHes to Jupiter to restart the container.
+pushes it to GHCR. Container updates on the production host are handled
+outside these repos (an image-watcher picks up the new tag) — there is no
+SSH deploy step.
 
 ### 9. Monitor the build
 
-Check the Actions tab in each repo:
+Check the Actions tab in each repo (or `gh run watch`):
 
 - https://github.com/dschoepel/ptraker-api/actions
 - https://github.com/dschoepel/ptraker-client/actions
 
-Wait for both workflows to complete (typically 2–4 minutes each).
+Wait for both workflows to complete (typically 1–4 minutes each).
 If a workflow fails, check the logs before proceeding.
 
-### 10. Verify on Jupiter
+### 10. Hand off verification
 
-After both builds complete, SSH to Jupiter and confirm containers are running
-the new image:
+Tell the user the images are published. The user rolls out the containers and
+verifies the live site themselves — do not SSH to the host or curl production
+endpoints. Suggest what to check based on the release, e.g.:
 
-```bash
-ssh -p 22791 dschoepel@142.202.190.9
-docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}" | grep ptraker
-```
-
-Then smoke test via browser:
-
-- https://ptraker.com — React app loads, login works
-- https://api.ptraker.com/health — returns `{"status":"ok",...}`
-- https://supabase.ptraker.com — returns HTTP 401 (Kong is up)
-
-If the API was updated, also verify:
-
-- Dashboard loads with portfolio data
-- Prices refresh on demand
-- 
-
-If the client was updated, also verify the specific features that changed.
+- Footer shows the new Client/API version
+- Dashboard loads with portfolio data and prices refresh on demand
+- The specific features or fixes in this release
 
 ### Notes
 
-- **First-time deploy only**: before the first tag, Jupiter needs a one-time
-  `docker login ghcr.io` with a GitHub PAT (`read:packages` scope) so it can
-  pull the private GHCR images. After that, the deploy workflow handles everything.
-- **Rollback**: `docker compose pull api` with a previous image tag, or
-  `docker compose up -d --no-deps api` with the previous `latest`.
-- **DB migrations**: if a release adds new tables or columns, run the SQL in
-  Studio before deploying the API that depends on them.
+- **Client lockfile drift**: run `npm ci --dry-run` in ptraker-client before
+  tagging — a stale `package-lock.json` fails the Docker build.
+- **DB migrations**: if a release adds new tables or columns, the user must run
+  the SQL in Supabase Studio before the new API container starts.
 - **VITE_ vars**: if production Supabase keys ever change, update the GitHub
   Actions secrets in ptraker-client before tagging — they are baked into the
   client bundle at build time.
+- Host-specific details (addresses, SSH, rollback commands) are in the private
+  notes loaded via `CLAUDE.local.md` — never add them here (this repo is public).

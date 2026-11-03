@@ -23,7 +23,7 @@ This workspace root contains shared infrastructure that spans both repos.
 - **API**: Node.js 23 / Express 4 / Supabase PostgreSQL / yahoo-finance2
 - **Client**: React 19 / Vite 8 / Ant Design v6 / Recharts / PWA
 - **Auth**: Supabase GoTrue (self-hosted)
-- **Hosting**: Jupiter VPS — Docker / Portainer / Swag (Let's Encrypt TLS)
+- **Hosting**: self-hosted Docker — images built by GitHub Actions and published to GHCR
 
 ---
 
@@ -33,29 +33,23 @@ This workspace root contains shared infrastructure that spans both repos.
 pTraker/
 ├── ARCHITECTURE.md                    — system overview, DB schema, flow diagrams
 ├── CLAUDE.md                          — Claude Code workspace guide
-├── jupiter-vps-security-hardening.md  — Jupiter VPS security baseline
-├── deploy/
-│   ├── docker-compose.yml             — production Docker stack
-│   ├── .env.example                   — required environment variables
-│   ├── swag/                          — Swag/nginx proxy config
-│   ├── supabase/                      — Supabase stack config
-│   └── seeds/                         — demo user SQL seed scripts
 └── .claude/
     └── commands/
-        └── deploy.md                  — /deploy skill for Claude Code
+        └── deploy.md                  — /deploy release checklist for Claude Code
 ```
 
 `ptraker-api/` and `ptraker-client/` are separate git repos and are excluded from
-this repo's history.
+this repo's history. Each has a `Dockerfile`; the API repo also has demo-user seed
+scripts in `deploy/seeds/`. Host-specific deployment configuration is kept privately.
 
 ---
 
 ## Features
 
 - Dashboard with net worth summary, gain/loss, and per-account breakdown
-- Import from LPL Financial CSV, OFX/QFX (investment + bank), CFCU CSV, and manual entry
+- Import from LPL Financial CSV, OFX/QFX (investment + bank), credit-union CSV, and manual entry
 - Manual entry for exchange-listed stocks (Yahoo Finance autocomplete) and private/unlisted stocks
-- Nightly price refresh via Yahoo Finance (weekdays 5 pm CT)
+- Price refresh via Yahoo Finance — nightly (weekdays 5 pm CT) plus intraday (hourly 9:30 am–3:30 pm ET); manually priced private holdings keep their entered price
 - Watchlist with symbol search and sparkline price history
 - Portfolio sharing — share your portfolio view with another user
 - Admin panel — invite users, manage roles, approve upgrade requests
@@ -70,7 +64,7 @@ this repo's history.
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full system architecture and local dev setup.
 Quick reference:
 
-- Dev Supabase: Mercury (10.0.10.60:8100)
+- Dev Supabase: self-hosted instance (set `SUPABASE_URL` / `SUPABASE_PUBLIC_URL` in `ptraker-api/.env` and `VITE_SUPABASE_URL` in `ptraker-client/.env`)
 - API dev server: `npm run dev` → http://localhost:5000
 - Client dev server: `npm run dev` → http://localhost:5173
 
